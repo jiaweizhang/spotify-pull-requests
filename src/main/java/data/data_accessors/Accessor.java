@@ -1,8 +1,14 @@
 package data.data_accessors;
 
-/**
- * Created by nesh170 on 10/29/2016.
- */
-public class Accessor {
+import org.jooq.DSLContext;
 
+import java.sql.Connection;
+
+public class Accessor {
+    protected DSLContext myQuery;
+
+    public Accessor(){
+        DBManager db = DBManager.getInstance();
+        myQuery = db.getContext();
+    }
 }
