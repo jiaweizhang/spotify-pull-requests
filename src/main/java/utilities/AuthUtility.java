@@ -6,7 +6,7 @@ import utilities.models.*;
  * Created by jiaweizhang on 10/29/2016.
  */
 public class AuthUtility {
-    public static AuthorizeResponse authorize(AuthorizeRequest authorizeRequest) {
+    public static String authorizeURL(AuthorizeRequest authorizeRequest) {
         // TODO
         return null;
     }
