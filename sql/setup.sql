@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS master_playlists (
   playlist_id VARCHAR(50) NOT NULL, --this is the master playlist id on spotify (ie LIT AF)
   owner_id    VARCHAR(50) NOT NULL,
-  threshold   INTEGER     NOT NULL CHECK (threshold >= 0 AND threshold <= 100), --this is the threshold for each song
+  threshold   INTEGER     NOT NULL
+    CHECK (threshold >= 0 AND threshold <= 100  ), --this is the threshold for each song
+  CONSTRAINT PK_master_playlists PRIMARY KEY (playlist_id),
   CONSTRAINT FK_master_playlists_owner_id FOREIGN KEY (owner_id) REFERENCES users (spotify_userid)
 );
 

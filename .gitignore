@@ -29,6 +29,7 @@ src/main/resources
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
+gradle.properties
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
