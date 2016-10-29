@@ -1,3 +1,12 @@
+.icon-text {
+    display: block; overflow: hidden;
+}
+
+.ico {
+    display: inline-block;
+    float:left;
+}
+
 /*
  * Base structure
  */
@@ -64,6 +73,12 @@ li.nav-left-hover {
  * Top navigation
  * Hide default border to remove 1px line.
  */
+.navbar-brand {
+    font-size: 3.5vh;
+    padding: 0px;
+    margin-right: 50px;
+    margin-left: 10px;
+}
 .navbar-fixed-top {
     background-color: black;
     border-bottom-width: 2px;

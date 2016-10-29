@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html ng-app="spotifyCollabApp" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Spotify Collab App</title>
-  <script src="https://use.fontawesome.com/9c7229e395.js"></script>
+    <meta charset="UTF-8">
+    <title>Spotify Collab App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://use.fontawesome.com/9c7229e395.js"></script>
 </head>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+      integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"
+        integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"
+        crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="styles/dashboard.css">
 
 <body>
 
 <nav class="navbar navbar-dark navbar-fixed-top" id="navbar-border">
-    <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
+    <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
     <a class="navbar-brand" href="#/">Spotify Collab</a>
     <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
             <a class="nav-item" href="#/">Home</a>
             <a class="nav-item" href="#/login">Login</a>
             <a class="nav-item" href="#/logout">Logout</a>
+            <a class="nav-item" href="#/">Preferences</a>
         </nav>
         <form class="float-xs-right">
             <input type="text" class="form-control" placeholder="Search for a playlist...">
@@ -35,10 +41,11 @@
                 <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
 
                 <li class="nav-left-hover">
-                    <a href="#"><span class="glyphicon glyphicon-plus"></span>New collaborative playlist</a>
+                        <a href="#/playlistcreate">
+                            <i class="fa fa-plus-square-o fa-lg" aria-hidden="true"></i>
+                            New collaborative playlist
+                        </a>
                 </li>
-
-                <li class="nav-left-hover"><a href="#">View playlists</a></li>
             </ul>
             <ul class="nav nav-sidebar">
                 <li class="navbar-left-header">PLAYLISTS</li>
@@ -47,10 +54,6 @@
                 <li class="nav-left-hover"><a href="">Playlist 1</a></li>
                 <li class="nav-left-hover"><a href="">Playlist 2</a></li>
                 <li class="nav-left-hover"><a href="">Playlist 3</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li class="nav-left-hover"><a href="">Preferences</a></li>
-                <li class="nav-left-hover"><a href="">Help</a></li>
             </ul>
         </div>
         <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
@@ -74,6 +77,6 @@
 <script src="js/controllers/home.js"></script>
 <script src="js/controllers/login.js"></script>
 <script src="js/controllers/logout.js"></script>
-
+<script src="js/controllers/playlistCreate.js"></script>
 </body>
 </html>
