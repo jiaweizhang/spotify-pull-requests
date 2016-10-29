@@ -14,17 +14,21 @@
         crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="styles/dashboard.css">
-
 <body>
 
 <nav class="navbar navbar-dark navbar-fixed-top" id="navbar-border">
     <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar"
             aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
-    <a class="navbar-brand" href="#/">Spotify Collab</a>
+    <a class="navbar-brand" href="#/">
+        <img class="spotify-logo"
+             src="resources/spotify-icons-logos/icons/01_RGB/02_PNG/Spotify_Icon_RGB_Green.png">
+        Spotify Collab</a>
     <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
             <a class="nav-item" href="#/">Home</a>
-            <a class="nav-item" href="#/login">Login</a>
+            <a class="nav-item"
+               href="https://accounts.spotify.com/authorize/?client_id=7f5795cf20ba45b08ca27a4a8f92cf23&response_type=code&redirect_uri=http%3A%2F%2Feasywebapi.com%3A8080%2Fredirect&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private&state=spr">
+                Login</a>
             <a class="nav-item" href="#/logout">Logout</a>
             <a class="nav-item" href="#/">Preferences</a>
         </nav>
@@ -38,8 +42,6 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="override-sidebar">
             <ul class="nav nav-sidebar">
-                <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
-
                 <li class="nav-left-hover">
                         <a href="#/playlistcreate">
                             <i class="fa fa-plus-square-o fa-lg" aria-hidden="true"></i>

@@ -6,7 +6,10 @@
     display: inline-block;
     float:left;
 }
-
+.spotify-logo {
+    margin-right: 5px;
+    max-height: 33px;
+}
 /*
  * Base structure
  */
@@ -52,6 +55,7 @@ li.nav-left-hover:hover {
 }
 
 li.nav-left-hover {
+    padding-left: 10px;
 }
 
 /*
@@ -60,7 +64,7 @@ li.nav-left-hover {
 
 #override-sidebar {
     padding-top: 10px;
-    background-color: black;
+    background-color: #191414;
     margin-bottom: 30px;
 }
 
@@ -77,10 +81,10 @@ li.nav-left-hover {
     font-size: 3.5vh;
     padding: 0px;
     margin-right: 50px;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 .navbar-fixed-top {
-    background-color: black;
+    background-color: #191414;
     border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: #404040;
