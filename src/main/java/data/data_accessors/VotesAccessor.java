@@ -21,9 +21,9 @@ public class VotesAccessor extends Accessor {
         super();
     }
 
-    public Map<Song, List<Vote>> getVotesFromPlaylist(String playlistID) {
-        Record playlistRecord = myQuery.select(MASTER_PLAYLISTS.PLAYLIST_ID, MASTER_PLAYLISTS.THRESHOLD).from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne();
-        int numberOfCollabs = myQuery.select().from().where(MASTER_CONTRIBUTORS.PLAYLIST_ID.equal(playlistRecord.getValue(MASTER_PLAYLISTS.PLAYLIST_ID))).fetchCount();
+    public Map<Song,List<Vote>> getVotesFromPlaylist(String playlistID){
+        Record playlistRecord = myQuery.select(MASTER_PLAYLISTS.PLAYLIST_ID,MASTER_PLAYLISTS.THRESHOLD).from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne();
+        int numberOfCollaborators = myQuery.select().from().where(MASTER_CONTRIBUTORS.PLAYLIST_ID.equal(playlistRecord.getValue(MASTER_PLAYLISTS.PLAYLIST_ID))).fetchCount();
         Result<Record> songsRecord = myQuery.select().from(MASTER_SONGS).where(MASTER_SONGS.PLAYLIST_ID.equal(playlistID)).fetch();
         List<Integer> songIDs = songsRecord.stream().map(record -> record.getValue(MASTER_SONGS.ID)).collect(Collectors.toList());
         Map<Integer, Result<Record>> voteRecord = myQuery.select().from(VOTE_TABLE).where(VOTE_TABLE.SONG_ID.in(songIDs)).fetch().intoGroups(VOTE_TABLE.SONG_ID);
@@ -36,7 +36,7 @@ public class VotesAccessor extends Accessor {
         Map<Song, List<Vote>> songVoteMap = new HashMap<>();
         songs.forEach(song -> {
             if (voteRecord.containsKey(song.myID)) {
-                createVoteList(song, voteRecord.get(song.myID), playlistRecord.getValue(MASTER_PLAYLISTS.THRESHOLD), numberOfCollabs, songVoteMap);
+                createVoteList(song,voteRecord.get(song.myID),playlistRecord.getValue(MASTER_PLAYLISTS.THRESHOLD),numberOfCollaborators, songVoteMap);
             }
         });
         return songVoteMap;
