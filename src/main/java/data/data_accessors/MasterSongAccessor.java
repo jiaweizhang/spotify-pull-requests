@@ -21,9 +21,9 @@ public class MasterSongAccessor extends Accessor {
                 .values(song.myPlaylistID, song.myContributor, song.mySpotifySongID).execute();
     }
 
-    public void delete(Song song) {
-        myQuery.delete(MASTER_SONGS).where(MASTER_SONGS.ID.equal(song.myID)).execute();
-        myQuery.delete(VOTE_TABLE).where(VOTE_TABLE.SONG_ID.equal(song.myID)).execute();
+    public void delete(int myID) {
+        myQuery.delete(MASTER_SONGS).where(MASTER_SONGS.ID.equal(myID)).execute();
+        myQuery.delete(VOTE_TABLE).where(VOTE_TABLE.SONG_ID.equal(myID)).execute();
     }
     public boolean isExist(int id) {
         return myQuery.select().from(MASTER_SONGS).where(MASTER_SONGS.ID.equal(id)).fetchOne() != null;

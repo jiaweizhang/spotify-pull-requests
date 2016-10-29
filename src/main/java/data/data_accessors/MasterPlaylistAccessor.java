@@ -21,14 +21,8 @@ public class MasterPlaylistAccessor extends Accessor {
     /*
     create master playlist
      */
-    public void create(MasterPlaylist masterPlaylist) {
-        for (Song song : masterPlaylist.mySongs) {
-            myQuery.insertInto(MASTER_SONGS, MASTER_SONGS.ID, MASTER_SONGS.PLAYLIST_ID, MASTER_SONGS.CONTRIBUTOR, MASTER_SONGS.SONG_ID).values(song.myID, song.myPlaylistID, song.myContributor, song.mySpotifySongID).execute();
-        }
-        for (String collab : masterPlaylist.myCollabs) {
-            myQuery.insertInto(MASTER_CONTRIBUTORS, MASTER_CONTRIBUTORS.PLAYLIST_ID, MASTER_CONTRIBUTORS.COLLAB_ID).values(masterPlaylist.myPlaylistID, collab).execute();
-        }
-        myQuery.insertInto(MASTER_PLAYLISTS, MASTER_PLAYLISTS.PLAYLIST_ID, MASTER_PLAYLISTS.OWNER_ID, MASTER_PLAYLISTS.THRESHOLD).values(masterPlaylist.myPlaylistID, masterPlaylist.myOwnerID, masterPlaylist.myThreshold).execute();
+    public void create(String playlistID, String ownerID, int threshold) {
+        myQuery.insertInto(MASTER_PLAYLISTS, MASTER_PLAYLISTS.PLAYLIST_ID, MASTER_PLAYLISTS.OWNER_ID, MASTER_PLAYLISTS.THRESHOLD).values(playlistID, ownerID, threshold).execute();
     }
     public boolean isExist(String playlistID) {
         return myQuery.select().from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne() != null;
