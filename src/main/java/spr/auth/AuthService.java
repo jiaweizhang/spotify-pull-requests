@@ -4,10 +4,9 @@ import com.wrapper.spotify.Api;
 import com.wrapper.spotify.methods.CurrentUserRequest;
 import com.wrapper.spotify.models.User;
 import spr.exceptions.AuthException;
-import spr.exceptions.WrapperException;
 import spr.std.Service;
-import spr.std.models.StdResponse;
 import utilities.AuthUtility;
+import utilities.JwtUtility;
 import utilities.models.TokenResponse;
 
 /**
@@ -17,7 +16,7 @@ import utilities.models.TokenResponse;
 @org.springframework.stereotype.Service
 public class AuthService extends Service {
 
-    public StdResponse authorize(String code, String error, String state) {
+    public String authorize(String code, String error, String state) {
         // validate hardcoded state variable
         if (!state.equals("spr")) {
             throw new AuthException("state does not equal spr");
@@ -51,10 +50,11 @@ public class AuthService extends Service {
             // else, add
 
             // Store userId, email, accessToken, refreshToken into database
-        } catch (Exception e) {
-            throw new WrapperException();
-        }
 
-        return new StdResponse(200, true, tokenResponse.toString());
+            // generate jwt token
+            return JwtUtility.generateToken(userId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
