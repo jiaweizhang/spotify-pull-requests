@@ -34,6 +34,14 @@ CREATE TABLE IF NOT EXISTS master_songs (
   CONSTRAINT FK_master_songs_contributor FOREIGN KEY (contributor) REFERENCES users (spotify_userid)
 );
 
+/* Master contributors table */
+CREATE TABLE IF NOT EXISTS master_contributors (
+  playlist_id VARCHAR(50) NOT NULL,
+  collab_id VARCHAR(50) NOT NULL,
+  CONSTRAINT FK_master_contributors_playlist_id FOREIGN KEY (playlist_id) REFERENCES master_playlists(playlist_id),
+  CONSTRAINT FK_master_contributors_collab_id FOREIGN KEY (collab_id) REFERENCES users(spotify_userid)
+);
+
 /* Individual PR Playlists table */
 CREATE TABLE IF NOT EXISTS individual_playlists (
   spotify_playlist_id VARCHAR(50) NOT NULL,
@@ -52,5 +60,7 @@ CREATE TABLE IF NOT EXISTS vote_table (
   CONSTRAINT FK_vote_table_song_id FOREIGN KEY (song_id) REFERENCES master_songs (id),
   CONSTRAINT FK_vote_table_voted_by FOREIGN KEY (voted_by) REFERENCES users (spotify_userid)
 );
+
+
 
 /* Upvote/downvote table */
