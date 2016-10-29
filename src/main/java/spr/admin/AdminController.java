@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import spr.polling.PollingService;
 import spr.std.Controller;
 
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class AdminController extends Controller {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private PollingService pollingService;
+
     /**
      * Endpoint for resetting database
      *
@@ -34,4 +38,10 @@ public class AdminController extends Controller {
         return wrap(adminService.upgradeDb());
     }
 
+    @RequestMapping(value = "/polling",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity polling() {
+        return wrap(pollingService.start());
+    }
 }
