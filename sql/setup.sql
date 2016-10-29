@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
   authorization_code VARCHAR(255) NOT NULL,
   refresh_token      VARCHAR(255) NOT NULL,
   access_token       VARCHAR(255) NOT NULL,
-  CONSTRAINT PK_users PRIMARY KEY (spotify_userid),
+  CONSTRAINT PK_users PRIMARY KEY (spotify_userid)
 );
 
 
@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS master_playlists (
   playlist_id VARCHAR(50) NOT NULL, --this is the master playlist id on spotify (ie LIT AF)
   owner_id    VARCHAR(50) NOT NULL,
   threshold   INTEGER NOT NULL CHECK (threshold >= 0 AND threshold <= 100), --this is the threshold for each song
+  CONSTRAINT PK_master_playlists PRIMARY KEY (playlist_id),
   CONSTRAINT FK_master_playlists_owner_id FOREIGN KEY (owner_id) REFERENCES users (spotify_userid)
 );
 
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS master_songs (
   contributor VARCHAR(50) NOT NULL,
   song_id     VARCHAR(50) NOT NULL,
   CONSTRAINT PK_master_songs PRIMARY KEY (id),
-  CONSTRAINT FK_master_songs_playlist_id FOREIGN KEY (playlist_id) REFERENCES master_playlist (playlist_id),
+  CONSTRAINT FK_master_songs_playlist_id FOREIGN KEY (playlist_id) REFERENCES master_playlists (playlist_id),
   CONSTRAINT FK_master_songs_contributor FOREIGN KEY (contributor) REFERENCES users (spotify_userid)
 );
 
