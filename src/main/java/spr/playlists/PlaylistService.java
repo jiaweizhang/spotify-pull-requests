@@ -43,10 +43,18 @@ public class PlaylistService extends Service {
                 createPlaylistRequest.playlistName + "_PR", createPlaylistRequest.api);
 
         // create master playlist in database
+        if (masterPlaylistAccessor.isExist(playlist.getId())) {
+            throw new IllegalArgumentException("playlist of that name already exists");
+        }
         masterPlaylistAccessor.create(playlist.getId(), createPlaylistRequest.spotifyId, createPlaylistRequest.threshold);
 
         // create individual playlist in database
-        // TODO
+        if (individualPlaylistAccessor.isExist(individualPlaylist.getId())) {
+            throw new IllegalArgumentException("individual playlist of that name already exists");
+        }
+        individualPlaylistAccessor.addIndividualPlaylist(individualPlaylist.getId(),
+                createPlaylistRequest.spotifyId,
+                playlist.getId());
 
         // join as member of playlist
         masterPlaylistAccessor.addUserToPlaylist(playlist.getId(), createPlaylistRequest.spotifyId);
@@ -79,7 +87,16 @@ public class PlaylistService extends Service {
         masterPlaylistAccessor.addUserToPlaylist(joinPlaylistRequest.playlistId, joinPlaylistRequest.spotifyId);
 
         // create individual playlist
-        // TODO
+        Playlist individualPlaylist = createPlaylist(joinPlaylistRequest.spotifyId,
+                playlistName + "_PR", joinPlaylistRequest.api);
+
+        // create individual playlist in database
+        if (individualPlaylistAccessor.isExist(individualPlaylist.getId())) {
+            throw new IllegalArgumentException("individual playlist of that name already exists");
+        }
+        individualPlaylistAccessor.addIndividualPlaylist(individualPlaylist.getId(),
+                joinPlaylistRequest.spotifyId,
+                individualPlaylist.getId());
 
         // return new JoinPlaylistResponse
         return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", playlist);
