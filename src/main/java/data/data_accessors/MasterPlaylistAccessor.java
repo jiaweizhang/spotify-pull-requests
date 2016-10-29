@@ -33,6 +33,7 @@ public class MasterPlaylistAccessor extends Accessor {
     public boolean isExist(String playlistID) {
         return myQuery.select().from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne() != null;
     }
+
     public MasterPlaylist retrieve(String playlistID) {
         Record masterPlaylistResult = myQuery.select().from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne();
         Result<Record> masterSongResult = myQuery.select().from(MASTER_SONGS).where(MASTER_SONGS.PLAYLIST_ID.equal(playlistID)).fetch();

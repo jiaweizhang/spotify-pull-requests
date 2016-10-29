@@ -25,5 +25,8 @@ public class MasterSongAccessor extends Accessor {
         myQuery.delete(MASTER_SONGS).where(MASTER_SONGS.ID.equal(song.myID)).execute();
         myQuery.delete(VOTE_TABLE).where(VOTE_TABLE.SONG_ID.equal(song.myID)).execute();
     }
+    public boolean isExist(int id) {
+        return myQuery.select().from(MASTER_SONGS).where(MASTER_SONGS.ID.equal(id)).fetchOne() != null;
+    }
 
 }
