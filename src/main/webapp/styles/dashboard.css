@@ -7,6 +7,9 @@ body {
   padding-top: 50px;
 }
 
+li.nav-left-hover:hover {
+    background-color: aqua;
+}
 
 /*
  * Global add-ons

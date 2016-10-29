@@ -15,7 +15,7 @@
 
 <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
     <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
-    <a class="navbar-brand" href="#">Spotify Collab</a>
+    <a class="navbar-brand" href="#/">Spotify Collab</a>
     <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
             <a class="nav-item nav-link" href="#/">Home</a>
@@ -32,10 +32,13 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
+                <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
+
+                <li class="nav-left-hover">
+                    <a href="#"><span class="glyphicon glyphicon-plus"></span>New collaborative playlist</a>
+                </li>
+
+                <li><a href="#">View playlists</a></li>
             </ul>
             <ul class="nav nav-sidebar">
                 <li><a href="">Nav item</a></li>
@@ -49,6 +52,9 @@
                 <li><a href="">One more nav</a></li>
                 <li><a href="">Another nav item</a></li>
             </ul>
+        </div>
+        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+            <div ng-view></div>
         </div>
     </div>
 </div>
