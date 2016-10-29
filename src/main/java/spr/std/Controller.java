@@ -2,8 +2,10 @@ package spr.std;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import spr.exceptions.AuthException;
 import spr.std.models.StdRequest;
 import spr.std.models.StdResponse;
+import utilities.JwtUtility;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -22,7 +24,12 @@ public class Controller {
     }
 
     public void pre(StdRequest stdRequest, HttpServletRequest httpServletRequest) {
-        // TODO
+        String jwt = httpServletRequest.getHeader("Authorization");
+        try {
+            stdRequest.spotifyId = JwtUtility.retrieveSpotifyId(jwt);
+        } catch (Exception e) {
+            throw new AuthException("Jwt invalid");
+        }
     }
 
     protected ResponseEntity wrap(StdResponse stdResponse) {
