@@ -13,7 +13,7 @@ public class IndividualPlaylistAccessor extends Accessor {
         super();
     }
 
-    public List<IndividualPlaylist> retrieveIndividualPlaylist(String playlistID){
+    public IndividualPlaylist retrieveIndividualPlaylist(String playlistID){
        Record record = myQuery.select().from(INDIVIDUAL_PLAYLISTS).where(INDIVIDUAL_PLAYLISTS.SPOTIFY_PLAYLIST_ID.equal(playlistID)).fetchOne();
        IndividualPlaylist playlist = new IndividualPlaylist(
                record.getValue(INDIVIDUAL_PLAYLISTS.SPOTIFY_PLAYLIST_ID),
