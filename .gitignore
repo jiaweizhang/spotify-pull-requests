@@ -3,7 +3,7 @@ build/
 .gradle/
 
 # secure files
-# src/main/resources
+src/main/resources
 
 # Created by https://www.gitignore.io/api/java,intellij
 

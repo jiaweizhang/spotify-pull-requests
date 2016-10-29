@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<script>
+			// This script redirects the user to the webapp
+			// after setting auth token in localStorage
+			// URL preprocessing
+			var str = window.location.href.split('=')[1];
+
+			  // set localStorage
+			localStorage.setItem("auth", str);
+
+			 // redirect to webapp
+			window.location = '/';
+		</script>
+	</head>
+</html>

@@ -6,7 +6,7 @@ public class Users {
     public String myAuthToken;
     public String myRefreshToken;
 
-    public Users(String spotifyUserID, String email, String authToken, String refreshToken){
+    public Users(String spotifyUserID, String email, String authToken, String refreshToken) {
         mySpotifyUserID = spotifyUserID;
         myEmail = email;
         myAuthToken = authToken;

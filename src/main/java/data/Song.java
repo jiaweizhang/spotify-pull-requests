@@ -6,7 +6,7 @@ public class Song {
     public String myContributor;
     public String mySpotifySongID;
 
-    public Song(int id, String playlistID, String contributor, String songID){
+    public Song(int id, String playlistID, String contributor, String songID) {
         myID = id;
         myPlaylistID = playlistID;
         myContributor = contributor;

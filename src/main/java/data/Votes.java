@@ -8,7 +8,7 @@ public class Votes {
     public String myVotedBy; //username of the user who voted
     public boolean myVote;
 
-    public Votes(int id, String votedBy, boolean vote){
+    public Votes(int id, String votedBy, boolean vote) {
         myID = id;
         myVotedBy = votedBy;
         myVote = vote;

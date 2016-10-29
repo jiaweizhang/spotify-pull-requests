@@ -8,13 +8,13 @@ public class IndividualPlaylist {
     public String myMasterID;
     private List<Song> mySongs;
 
-    public IndividualPlaylist(String playlistID, String ownerID, String masterID){
+    public IndividualPlaylist(String playlistID, String ownerID, String masterID) {
         myPlaylistID = playlistID;
         myOwnerID = ownerID;
         myMasterID = masterID;
     }
 
-    public void setListOfSongs(List<Song> songs){
+    public void setListOfSongs(List<Song> songs) {
         mySongs = songs;
     }
 }

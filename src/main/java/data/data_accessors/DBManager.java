@@ -11,40 +11,38 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBManager {
+    private static DBManager instance = null;
     @Autowired
     private Environment myEnviroment;
-
-    private static DBManager instance = null;
     private Connection myConnection;
     private DSLContext myContext;
 
-    protected DBManager(){
+    protected DBManager() {
         connectDatabase();
         getContext();
     }
 
-    public static DBManager getInstance(){
-        if(instance == null){
+    public static DBManager getInstance() {
+        if (instance == null) {
             instance = new DBManager();
         }
         return instance;
     }
 
-    private void connectDatabase(){
-        try{
+    private void connectDatabase() {
+        try {
             myConnection = DriverManager.getConnection(
                     myEnviroment.getProperty("datasource.url"),
                     myEnviroment.getProperty("datasource.username"),
                     myEnviroment.getProperty("datasource.password")
             );
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private DSLContext getContext(){
-        if(myContext == null){
+    private DSLContext getContext() {
+        if (myContext == null) {
             myContext = DSL.using(myConnection, SQLDialect.POSTGRES);
         }
         return myContext;

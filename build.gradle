@@ -42,6 +42,19 @@ dependencies {
     compile 'io.jsonwebtoken:jjwt:0.6.0'
     compile 'com.sun.mail:javax.mail:1.5.6'
     compile group: 'org.springframework', name: 'spring-context-support', version: '4.3.3.RELEASE'
+
+    // spotify web api java
+    compile 'se.michaelthelin.spotify:spotify-web-api-java:1.5.0'
+
+    // unirest
+    compile 'com.mashape.unirest:unirest-java:1.4.9'
+    compile 'org.apache.httpcomponents:httpclient:4.3.6'
+    compile 'org.apache.httpcomponents:httpasyncclient:4.0.2'
+    compile 'org.apache.httpcomponents:httpmime:4.3.6'
+    compile 'org.json:json:20140107'
+
+    // gson
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 }
 
 buildscript {
