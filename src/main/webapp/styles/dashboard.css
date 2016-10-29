@@ -4,20 +4,60 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
+    padding-top: 50px;
+    margin-bottom: 30px;
+}
+
+/* unvisited link */
+
+a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+a:link {
+    text-decoration: none;
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+/* mouse over link */
+a:hover {
+    color: white;
+}
+
+/* selected link */
+a:active {
+    text-decoration: none;
+    color: white;
 }
 
 li.nav-left-hover:hover {
-    background-color: aqua;
+    background-color: #404040;
+}
+
+li.nav-left-hover {
 }
 
 /*
  * Global add-ons
  */
 
+#override-sidebar {
+    padding-top: 10px;
+    background-color: black;
+    margin-bottom: 30px;
+}
+
 .sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
 }
 
 /*
@@ -25,81 +65,111 @@ li.nav-left-hover:hover {
  * Hide default border to remove 1px line.
  */
 .navbar-fixed-top {
-  border: 0;
+    background-color: black;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: #404040;
 }
 
 /*
  * Sidebar
  */
 
+/* alan added */
+.navbar-left-header {
+    padding-left: 5px;
+    font-family: sans-serif;
+    font-size: medium;
+    color: gray;
+}
+
 /* Hide for mobile, show later */
 .sidebar {
-  display: none;
+    display: none;
 }
+
 @media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
+    .sidebar {
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        background-color: #f5f5f5;
+        border-right: 1px solid #eee;
+    }
 }
 
 /* Sidebar navigation */
 .nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
 }
+
 .nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
+
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
+    color: #fff;
+    background-color: #428bca;
 }
-
 
 /*
  * Main content
  */
 
 .main {
-  padding: 20px;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
+    padding: 20px;
 }
 
+@media (min-width: 768px) {
+    .main {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+}
 
 /*
  * Placeholder dashboard ideas
  */
 
 .placeholders {
-  margin-bottom: 30px;
-  text-align: center;
+    margin-bottom: 30px;
+    text-align: center;
 }
+
 .placeholders h4 {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
+
 .placeholder {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
+
 .placeholder img {
-  display: inline-block;
-  border-radius: 50%;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+/* footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 30px;
+    line-height: 30px; /* Vertically center the text there */
+    background-color: #303030;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: small;
 }
