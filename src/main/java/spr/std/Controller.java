@@ -3,6 +3,7 @@ package spr.std;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 import spr.exceptions.AuthException;
 import spr.std.models.StdRequest;
 import spr.std.models.StdResponse;
@@ -16,6 +17,7 @@ import java.util.Calendar;
  * Created by jiaweizhang on 10/29/2016.
  */
 
+@RestController
 public class Controller {
 
     @Autowired
