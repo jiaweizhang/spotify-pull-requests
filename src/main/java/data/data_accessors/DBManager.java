@@ -1,4 +1,4 @@
-package data_accessors;
+package data.data_accessors;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
