@@ -5,6 +5,8 @@ public class Song {
     public String myPlaylistID;
     public String myContributor;
     public String mySpotifySongID;
+    public int votesTillAccept = -1;
+    public int votesTillDecline = -1;
 
     public Song(int id, String playlistID, String contributor, String songID) {
         myID = id;
