@@ -38,6 +38,9 @@ dependencies {
     compile 'com.sun.mail:javax.mail:1.5.6'
     compile group: 'org.springframework', name: 'spring-context-support', version: '4.3.3.RELEASE'
 
+    // spotify web api java
+    compile 'se.michaelthelin.spotify:spotify-web-api-java:1.5.0'
+
     // unirest
     compile 'com.mashape.unirest:unirest-java:1.4.9'
     compile 'org.apache.httpcomponents:httpclient:4.3.6'

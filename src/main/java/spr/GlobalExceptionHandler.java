@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import spr.exceptions.AuthException;
 import spr.exceptions.PropertyLoaderException;
+import spr.exceptions.WrapperException;
 import spr.std.Controller;
 import spr.std.models.StdResponse;
 
@@ -31,5 +32,10 @@ public class GlobalExceptionHandler extends Controller {
     @ExceptionHandler(PropertyLoaderException.class)
     public ResponseEntity handlePropertyLoaderException(Exception e) {
         return wrap(new StdResponse(500, false, "Error with property loader"));
+    }
+
+    @ExceptionHandler(WrapperException.class)
+    public ResponseEntity handleWrapperException(Exception e) {
+        return wrap(new StdResponse(500, false, "Error with Java Spotify Web API wrapper"));
     }
 }

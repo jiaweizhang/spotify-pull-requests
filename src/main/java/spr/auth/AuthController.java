@@ -20,8 +20,9 @@ public class AuthController extends Controller {
 
     @RequestMapping(value = "/redirect",
             method = RequestMethod.GET)
-    public ResponseEntity authorizeRedirect(@RequestParam(value = "code", required = true) String code,
+    public ResponseEntity authorizeRedirect(@RequestParam(value = "code", required = false) String code,
+                                            @RequestParam(value = "error", required = false) String error,
                                             @RequestParam(value = "state", required = true) String state) {
-        return wrap(authService.authorize(code, state));
+        return wrap(authService.authorize(code, error, state));
     }
 }
