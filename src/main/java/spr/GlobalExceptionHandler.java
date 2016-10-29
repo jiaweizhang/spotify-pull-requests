@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import spr.exceptions.AuthException;
+import spr.exceptions.MembershipException;
 import spr.exceptions.PropertyLoaderException;
 import spr.exceptions.WrapperException;
 import spr.std.Controller;
@@ -37,5 +38,10 @@ public class GlobalExceptionHandler extends Controller {
     @ExceptionHandler(WrapperException.class)
     public ResponseEntity handleWrapperException(Exception e) {
         return wrap(new StdResponse(500, false, "Error with Java Spotify Web API wrapper"));
+    }
+
+    @ExceptionHandler(MembershipException.class)
+    public ResponseEntity handleMembershipException(Exception e) {
+        return wrap(new StdResponse(200, false, "Collaborator membership error"));
     }
 }
