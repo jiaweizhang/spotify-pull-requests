@@ -41,7 +41,7 @@ public class DBManager {
         }
     }
 
-    private DSLContext getContext() {
+    public DSLContext getContext() {
         if (myContext == null) {
             myContext = DSL.using(myConnection, SQLDialect.POSTGRES);
         }
