@@ -5,7 +5,7 @@ import org.jooq.DSLContext;
 public class Accessor {
     protected DSLContext myQuery;
 
-    public Accessor(){
+    public Accessor() {
         DBManager db = DBManager.getInstance();
         myQuery = db.getContext();
     }
