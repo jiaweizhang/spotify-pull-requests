@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import spr.requestmodels.CreatePlaylistRequest;
 import spr.requestmodels.JoinPlaylistRequest;
@@ -26,6 +27,7 @@ public class PlaylistController extends Controller {
     @RequestMapping(value = "/playlist",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
+    @ResponseBody
     public ResponseEntity createPlaylist(CreatePlaylistRequest createPlaylistRequest,
                                          HttpServletRequest httpServletRequest) {
         pre(createPlaylistRequest, httpServletRequest);
@@ -35,6 +37,7 @@ public class PlaylistController extends Controller {
     @RequestMapping(value = "/invite",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
+    @ResponseBody
     public ResponseEntity joinPlaylist(JoinPlaylistRequest joinPlaylistRequest, HttpServletRequest httpServletRequest) {
         pre(joinPlaylistRequest, httpServletRequest);
         return wrap(playlistService.joinPlaylist(joinPlaylistRequest));
@@ -43,6 +46,7 @@ public class PlaylistController extends Controller {
     @RequestMapping(value = "/vote",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
+    @ResponseBody
     public ResponseEntity vote(VoteRequest voteRequest, HttpServletRequest httpServletRequest) {
         pre(voteRequest, httpServletRequest);
         return wrap(playlistService.vote(voteRequest));
