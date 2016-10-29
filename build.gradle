@@ -59,9 +59,9 @@ jooq {
     database_spotify(sourceSets.main) {
         jdbc {
             driver = 'org.postgresql.Driver'
-            url = 'jdbc:postgresql://localhost:5432/public'
-            user = 'postgres'
-            password = 'password'
+            url = db_url
+            user = db_username
+            password = db_password
             schema = 'public'
         }
         generator {
