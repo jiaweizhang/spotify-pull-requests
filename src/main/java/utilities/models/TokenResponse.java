@@ -9,4 +9,13 @@ public class TokenResponse {
     public String scope;
     public int expires_in;
     public String refresh_token;
+
+    @Override
+    public String toString() {
+        return "access_token: " + access_token
+                + "\ntoken_type: " + token_type
+                + "\nscope: " + scope
+                + "\nexpires_in: " + expires_in
+                + "\nrefresh_token: " + refresh_token;
+    }
 }
