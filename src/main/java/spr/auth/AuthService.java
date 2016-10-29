@@ -1,7 +1,6 @@
 package spr.auth;
 
 import com.wrapper.spotify.Api;
-import com.wrapper.spotify.exceptions.WebApiException;
 import com.wrapper.spotify.methods.CurrentUserRequest;
 import com.wrapper.spotify.models.User;
 import spr.exceptions.AuthException;
@@ -10,9 +9,6 @@ import spr.std.Service;
 import spr.std.models.StdResponse;
 import utilities.AuthUtility;
 import utilities.models.TokenResponse;
-
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Created by jiaweizhang on 10/29/2016.
