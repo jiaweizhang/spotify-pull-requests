@@ -19,7 +19,7 @@ public class PollingService extends Service {
         execService.scheduleWithFixedDelay(() -> {
             // TODO
             // iterate through all individual playlists and add to master PR playlist
-            
+
         }, 0, 60, TimeUnit.SECONDS);
         return new StdResponse(200, true, "Polling service started");
 

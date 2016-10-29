@@ -1,5 +1,6 @@
 package spr.std;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import spr.exceptions.AuthException;
@@ -17,6 +18,9 @@ import java.util.Calendar;
 
 public class Controller {
 
+    @Autowired
+    private Service service;
+
     public StdRequest pre(HttpServletRequest httpServletRequest) {
         StdRequest stdRequest = new StdRequest();
         pre(stdRequest, httpServletRequest);
@@ -27,6 +31,9 @@ public class Controller {
         String jwt = httpServletRequest.getHeader("Authorization");
         try {
             stdRequest.spotifyId = JwtUtility.retrieveSpotifyId(jwt);
+
+            // update the Api in the stdRequest
+            stdRequest.api = service.getApi(stdRequest.spotifyId);
         } catch (Exception e) {
             throw new AuthException("Jwt invalid");
         }

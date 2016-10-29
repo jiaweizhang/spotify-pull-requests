@@ -3,11 +3,14 @@ package spr.auth;
 import com.wrapper.spotify.Api;
 import com.wrapper.spotify.methods.CurrentUserRequest;
 import com.wrapper.spotify.models.User;
+import data.Users;
 import spr.exceptions.AuthException;
 import spr.std.Service;
 import utilities.AuthUtility;
 import utilities.JwtUtility;
 import utilities.models.TokenResponse;
+
+import java.sql.Timestamp;
 
 /**
  * Created by jiaweizhang on 10/29/2016.
@@ -42,16 +45,19 @@ public class AuthService extends Service {
             final User user = request.get();
             String userId = user.getId();
             String email = user.getEmail();
-
-            // TODO
-
-            // if user exists, update
-
-            // else, add
-
-            // Store userId, email, accessToken, refreshToken into database
-
-            // generate jwt token
+            Timestamp expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
+            if (authAccessor.isExist(userId)) {
+                Users userData = authAccessor.getUser(userId);
+                userData.myAccessToken = tokenResponse.access_token;
+                userData.myRefreshToken = tokenResponse.refresh_token;
+                userData.myExpiration = expiration;
+                authAccessor.updateAccessTokenAndExpirationToken(userData);
+            } else {
+                // add user to table
+                Users userData = new Users(userId, email, code,
+                        tokenResponse.refresh_token, tokenResponse.access_token, expiration);
+                authAccessor.insertUser(userData);
+            }
             return JwtUtility.generateToken(userId);
         } catch (Exception e) {
             return null;
