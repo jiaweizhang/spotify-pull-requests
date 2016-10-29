@@ -5,25 +5,29 @@ import data.Song;
 import org.jooq.Record;
 import org.jooq.Result;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import static db.tables.MasterContributors.MASTER_CONTRIBUTORS;
 import static db.tables.MasterPlaylists.MASTER_PLAYLISTS;
 import static db.tables.MasterSongs.MASTER_SONGS;
-import static db.tables.MasterContributors.MASTER_CONTRIBUTORS;
+
 /**
  * Created by Ankit on 10/29/2016.
  */
 public class MasterPlaylistAccessor extends Accessor {
 
-    public MasterPlaylistAccessor () {
+    public MasterPlaylistAccessor() {
         super();
     }
+
     /*
     create master playlist
      */
     public void create(String playlistID, String ownerID, int threshold) {
         myQuery.insertInto(MASTER_PLAYLISTS, MASTER_PLAYLISTS.PLAYLIST_ID, MASTER_PLAYLISTS.OWNER_ID, MASTER_PLAYLISTS.THRESHOLD).values(playlistID, ownerID, threshold).execute();
     }
+
     public boolean isExist(String playlistID) {
         return myQuery.select().from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne() != null;
     }

@@ -2,7 +2,7 @@ package spr.std;
 
 import com.wrapper.spotify.Api;
 import data.Users;
-import data.data_accessors.AuthAccessor;
+import data.data_accessors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import spr.exceptions.AuthException;
@@ -19,6 +19,10 @@ import java.sql.Timestamp;
 public class Service {
 
     public final AuthAccessor authAccessor = new AuthAccessor();
+    public final MasterPlaylistAccessor masterPlaylistAccessor = new MasterPlaylistAccessor();
+    public final IndividualPlaylistAccessor individualPlaylistAccessor = new IndividualPlaylistAccessor();
+    public final MasterSongAccessor masterSongAccessor = new MasterSongAccessor();
+    public final VotesAccessor votesAccessor = new VotesAccessor();
 
     @Autowired
     public JdbcTemplate jt;
