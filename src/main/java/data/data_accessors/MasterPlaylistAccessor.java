@@ -30,7 +30,9 @@ public class MasterPlaylistAccessor extends Accessor {
         }
         myQuery.insertInto(MASTER_PLAYLISTS, MASTER_PLAYLISTS.PLAYLIST_ID, MASTER_PLAYLISTS.OWNER_ID, MASTER_PLAYLISTS.THRESHOLD).values(masterPlaylist.myPlaylistID, masterPlaylist.myOwnerID, masterPlaylist.myThreshold).execute();
     }
-
+    public boolean isExist(String playlistID) {
+        return myQuery.select().from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne() != null;
+    }
     public MasterPlaylist retrieve(String playlistID) {
         Record masterPlaylistResult = myQuery.select().from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.equal(playlistID)).fetchOne();
         Result<Record> masterSongResult = myQuery.select().from(MASTER_SONGS).where(MASTER_SONGS.PLAYLIST_ID.equal(playlistID)).fetch();
@@ -53,6 +55,11 @@ public class MasterPlaylistAccessor extends Accessor {
         }
         MasterPlaylist playlistToReturn = new MasterPlaylist(listID, ownerID, threshold, songList, collabs);
         return playlistToReturn;
+    }
+
+    public void addUserToPlaylist(String playlistID, String collabID) {
+        myQuery.insertInto(MASTER_CONTRIBUTORS, MASTER_CONTRIBUTORS.PLAYLIST_ID, MASTER_CONTRIBUTORS.COLLAB_ID)
+                .values(playlistID, collabID).execute();
     }
 
 }
