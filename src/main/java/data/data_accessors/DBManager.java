@@ -3,17 +3,15 @@ package data.data_accessors;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import utilities.PropertiesLoader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBManager {
     private static DBManager instance = null;
-    @Autowired
-    private Environment myEnviroment;
     private Connection myConnection;
     private DSLContext myContext;
 
@@ -30,11 +28,12 @@ public class DBManager {
     }
 
     private void connectDatabase() {
+        Properties properties = PropertiesLoader.loadPropertiesFromPackage("application.properties");
         try {
             myConnection = DriverManager.getConnection(
-                    myEnviroment.getProperty("datasource.url"),
-                    myEnviroment.getProperty("datasource.username"),
-                    myEnviroment.getProperty("datasource.password")
+                    properties.getProperty("spring.datasource.url"),
+                    properties.getProperty("spring.datasource.username"),
+                    properties.getProperty("spring.datasource.password")
             );
         } catch (SQLException e) {
             e.printStackTrace();
