@@ -3,8 +3,6 @@ package data.data_accessors;
 import data.IndividualPlaylist;
 import org.jooq.Record;
 
-import java.util.List;
-
 import static db.tables.IndividualPlaylists.INDIVIDUAL_PLAYLISTS;
 
 public class IndividualPlaylistAccessor extends Accessor {
