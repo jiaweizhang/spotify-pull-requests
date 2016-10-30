@@ -204,7 +204,7 @@ public class PlaylistService extends Service {
         Api ownerApi = getApi(playlistPr.ownerId);
 
         // refresh the requests related to the PR
-        Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, ownerApi);
+        Playlist playlist = getPlaylistById(playlistPr.ownerId, playlistId, ownerApi);
 
         playlist.getTracks().getItems().forEach(System.out::println);
 
