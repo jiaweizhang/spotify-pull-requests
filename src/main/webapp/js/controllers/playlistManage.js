@@ -15,15 +15,19 @@ spotifyCollab
         var selectedPlaylistId = findPlaylistId(selectedPlaylistName);
 
         console.log("Selected Playlist ID: " + selectedPlaylistId);
-
+        $scope.getSongs();
         $scope.playlistSongs = [];
 
         // Get first song in list and load as embedded song
         var currentSongId = "";
-        $scope.songEmbedLink = "https://embed.spotify.com/?uri=spotify%3Atrack%" + currentSongId + "&theme=white";
+        $scope.songEmbedLink;
+        $scope.setEmbedLink = function(currentSongId) {
+            $scope.songEmbedLink = "https://embed.spotify.com/?uri=spotify%3Atrack%" + currentSongId + "&theme=white";
+        }
+
 
         // Get all song id's given the playlist id selected from left nav
-        $http({
+        $scope.getSongs = $http({
             method: 'GET',
             url: '/api/playlists/' + selectedPlaylistId,
             headers: {'Authorization': localStorage.getItem('auth')}
@@ -42,7 +46,41 @@ spotifyCollab
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            console.log(response);
         });
+
+        $scope.accept = false;
+
+        $scope.voteYes = function() {
+            $scope.accept = true;
+        }
+        $scope.voteNo = function() {
+            $scope.accept = false;
+        }
+
+        var voteData = {requestId: currentSongId, approve: $scope.accept};
+
+        $scope.sendVote = $http({
+            method: 'POST',
+            url: '/api/vote',
+            headers: {'Authorization': localStorage.getItem('auth')},
+            data: voteData
+        }).then(function successCallback(response) {
+            console.log(response);
+            // transition to next song
+            $scope.playlistSongs.shift();
+
+            if ($scope.playlistSongs.length > 0) {
+                currentSongId = $scope.playlistSongs[0];
+                $scope.setEmbedLink(currentSongId);
+            }
+
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log(response);
+        });
+
 
 
     });
