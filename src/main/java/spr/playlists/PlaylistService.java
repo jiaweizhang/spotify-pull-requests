@@ -100,15 +100,15 @@ public class PlaylistService extends Service {
     }
 
     public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
-        System.out.println("beginning of create playlist title: " + createPlaylistRequest.playlistName);
+        System.out.println("beginning of create playlist title: " + createPlaylistRequest.playlistTitle);
         // create playlist
         JSONObject playlist = createPlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName,
+                createPlaylistRequest.playlistTitle,
                 createPlaylistRequest.accessToken);
 
         // create playlist_pr
         JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName + "_PR",
+                createPlaylistRequest.playlistTitle + "_PR",
                 createPlaylistRequest.accessToken);
 
         // create playlist in database
