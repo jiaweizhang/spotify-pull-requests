@@ -37,11 +37,11 @@ public class AuthAccessor extends Accessor {
 
     public int updateUser(Users user) {
         return myQuery.update(USERS)
-                .set(USERS.EMAIL,user.email)
-                .set(USERS.AUTHORIZATION_CODE,user.authorizationCode)
-                .set(USERS.REFRESH_TOKEN,user.refreshToken)
-                .set(USERS.ACCESS_TOKEN,user.accessToken)
-                .set(USERS.EXPIRATION,user.expiration)
+                .set(USERS.EMAIL, user.email)
+                .set(USERS.AUTHORIZATION_CODE, user.authorizationCode)
+                .set(USERS.REFRESH_TOKEN, user.refreshToken)
+                .set(USERS.ACCESS_TOKEN, user.accessToken)
+                .set(USERS.EXPIRATION, user.expiration)
                 .where(USERS.SPOTIFY_ID.equal(user.spotifyId))
                 .execute();
     }

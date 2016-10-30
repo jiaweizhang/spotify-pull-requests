@@ -5,7 +5,7 @@ public class Contributor {
     public String playlistPrId;
     public String spotifyId;
 
-    public Contributor(String playlistId, String playlistPrId, String spotifyId){
+    public Contributor(String playlistId, String playlistPrId, String spotifyId) {
         this.playlistId = playlistId;
         this.playlistPrId = playlistPrId;
         this.spotifyId = spotifyId;

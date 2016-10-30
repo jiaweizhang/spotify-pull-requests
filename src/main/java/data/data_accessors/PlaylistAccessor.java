@@ -1,6 +1,7 @@
 package data.data_accessors;
 
 import data.Playlist;
+
 import static db.tables.Playlists.PLAYLISTS;
 
 public class PlaylistAccessor extends Accessor {

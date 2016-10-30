@@ -9,13 +9,13 @@ import static db.tables.Contributors.CONTRIBUTORS;
 
 public class ContributorAccessor extends Accessor {
 
-    public ContributorAccessor(){
+    public ContributorAccessor() {
         super();
     }
 
-    public int addContributor(Contributor contributor){
-        return myQuery.insertInto(CONTRIBUTORS,CONTRIBUTORS.PLAYLIST_ID,CONTRIBUTORS.PLAYLIST_PR_ID,CONTRIBUTORS.SPOTIFY_ID)
-                .values(contributor.playlistId,contributor.playlistPrId,contributor.spotifyId).execute();
+    public int addContributor(Contributor contributor) {
+        return myQuery.insertInto(CONTRIBUTORS, CONTRIBUTORS.PLAYLIST_ID, CONTRIBUTORS.PLAYLIST_PR_ID, CONTRIBUTORS.SPOTIFY_ID)
+                .values(contributor.playlistId, contributor.playlistPrId, contributor.spotifyId).execute();
     }
 
     public List<Contributor> getContributors(String playlistId) {

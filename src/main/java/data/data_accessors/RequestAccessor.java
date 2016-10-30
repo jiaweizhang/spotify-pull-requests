@@ -1,11 +1,13 @@
 package data.data_accessors;
+
 import data.Request;
-import static db.tables.Requests.REQUESTS;
 import org.jooq.Record;
 import org.jooq.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static db.tables.Requests.REQUESTS;
 
 
 public class RequestAccessor extends Accessor {
@@ -22,9 +24,11 @@ public class RequestAccessor extends Accessor {
     public void deleteRequest(int requestId) {
         myQuery.delete(REQUESTS).where(REQUESTS.REQUEST_ID.equal(requestId)).execute();
     }
+
     public boolean isExist(int requestId) {
         return myQuery.select().from(REQUESTS).where(REQUESTS.REQUEST_ID.equal(requestId)).fetchOne() != null;
     }
+
     public List<Request> returnRequests(String playlistId) {
         List<Request> requestList = new ArrayList<Request>();
         Result<Record> returnedRequests = myQuery.select().from(REQUESTS).where(REQUESTS.PLAYLIST_ID.equal(playlistId)).fetch();

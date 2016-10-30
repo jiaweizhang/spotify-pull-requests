@@ -2,10 +2,12 @@ package spr.std;
 
 import com.wrapper.spotify.Api;
 import data.Users;
-import data.data_accessors.*;
+import data.data_accessors.AuthAccessor;
+import data.data_accessors.VotesAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import spr.exceptions.AuthException;
+import spr.std.models.StdRequest;
 import utilities.AuthUtility;
 import utilities.models.TokenResponse;
 
@@ -27,10 +29,10 @@ public class Service {
     @Autowired
     public JdbcTemplate jt;
 
-    public Api getApi(String spotifyId) {
-        if (authAccessor.isExist(spotifyId)) {
+    public void updateRequest(StdRequest stdRequest) {
+        if (authAccessor.isExist(stdRequest.spotifyId)) {
             // if exists, check that access_token is not expired
-            Users user = authAccessor.getUser(spotifyId);
+            Users user = authAccessor.getUser(stdRequest.spotifyId);
             if (user.expiration.after(new Timestamp(System.currentTimeMillis()))) {
                 // expired
                 TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.refreshToken);
@@ -38,10 +40,10 @@ public class Service {
                 user.expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
 
                 // update access token and expiration
-                authAccessor.updateAccessTokenAndExpirationToken(user);
+                authAccessor.updateUser(user);
             }
-
-            return Api.builder().accessToken(user.accessToken).build();
+            stdRequest.accessToken = user.accessToken;
+            stdRequest.api = Api.builder().accessToken(user.accessToken).build();
         } else {
             // user does not exist
             throw new AuthException("User does not exist");
