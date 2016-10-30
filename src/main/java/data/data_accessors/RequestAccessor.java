@@ -1,6 +1,6 @@
 package data.data_accessors;
 import data.Request;
-import db.tables.Requests;
+import static db.tables.Requests.REQUESTS;
 import org.jooq.Record;
 import org.jooq.Result;
 
@@ -15,24 +15,24 @@ public class RequestAccessor extends Accessor {
     }
 
     public void addRequest(Request request) {
-        myQuery.insertInto(Requests.REQUESTS, Requests.REQUESTS.REQUEST_ID, Requests.REQUESTS.PLAYLIST_ID, Requests.REQUESTS.SPOTIFY_ID, Requests.REQUESTS.SONG_ID)
+        myQuery.insertInto(REQUESTS, REQUESTS.REQUEST_ID, REQUESTS.PLAYLIST_ID, REQUESTS.SPOTIFY_ID, REQUESTS.SONG_ID)
                 .values(request.requestId, request.playlistId, request.spotifyId, request.songId).execute();
     }
 
     public void deleteRequest(int requestId) {
-        myQuery.delete(Requests.REQUESTS).where(Requests.REQUESTS.REQUEST_ID.equal(requestId)).execute();
+        myQuery.delete(REQUESTS).where(REQUESTS.REQUEST_ID.equal(requestId)).execute();
     }
     public boolean isExist(int requestId) {
-        return myQuery.select().from(Requests.REQUESTS).where(Requests.REQUESTS.REQUEST_ID.equal(requestId)).fetchOne() != null;
+        return myQuery.select().from(REQUESTS).where(REQUESTS.REQUEST_ID.equal(requestId)).fetchOne() != null;
     }
     public List<Request> returnRequests(String playlistId) {
         List<Request> requestList = new ArrayList<Request>();
-        Result<Record> returnedRequests = myQuery.select().from(Requests.REQUESTS).where(Requests.REQUESTS.PLAYLIST_ID.equal(playlistId)).fetch();
+        Result<Record> returnedRequests = myQuery.select().from(REQUESTS).where(REQUESTS.PLAYLIST_ID.equal(playlistId)).fetch();
         for (Record record : returnedRequests) {
-            int id = record.getValue(Requests.REQUESTS.REQUEST_ID);
-            String listId = record.getValue(Requests.REQUESTS.PLAYLIST_ID);
-            String spotifyId = record.getValue(Requests.REQUESTS.SPOTIFY_ID);
-            String songId = record.getValue(Requests.REQUESTS.SONG_ID);
+            int id = record.getValue(REQUESTS.REQUEST_ID);
+            String listId = record.getValue(REQUESTS.PLAYLIST_ID);
+            String spotifyId = record.getValue(REQUESTS.SPOTIFY_ID);
+            String songId = record.getValue(REQUESTS.SONG_ID);
             Request request = new Request(id, listId, spotifyId, songId);
             requestList.add(request);
         }

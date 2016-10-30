@@ -1,7 +1,7 @@
 package data.data_accessors;
 
 import data.Playlist;
-import db.tables.Playlists;
+import static db.tables.Playlists.PLAYLISTS;
 
 public class PlaylistAccessor extends Accessor {
 
@@ -10,11 +10,11 @@ public class PlaylistAccessor extends Accessor {
     }
 
     public boolean isExist(String playlistId) {
-        return myQuery.select().from(Playlists.PLAYLISTS).where(Playlists.PLAYLISTS.PLAYLIST_ID.equal(playlistId)).fetchOne() != null;
+        return myQuery.select().from(PLAYLISTS).where(PLAYLISTS.PLAYLIST_ID.equal(playlistId)).fetchOne() != null;
     }
 
     public void addPlaylist(Playlist playlist) {
-        myQuery.insertInto(Playlists.PLAYLISTS, Playlists.PLAYLISTS.PLAYLIST_ID, Playlists.PLAYLISTS.PLAYLIST_NAME, Playlists.PLAYLISTS.OWNER_ID, Playlists.PLAYLISTS.THRESHOLD)
+        myQuery.insertInto(PLAYLISTS, PLAYLISTS.PLAYLIST_ID, PLAYLISTS.PLAYLIST_NAME, PLAYLISTS.OWNER_ID, PLAYLISTS.THRESHOLD)
                 .values(playlist.playlistId, playlist.playlistName, playlist.ownerId, playlist.threshold).execute();
     }
 }
