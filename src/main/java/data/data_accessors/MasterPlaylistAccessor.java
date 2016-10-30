@@ -7,6 +7,7 @@ import org.jooq.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static db.tables.MasterContributors.MASTER_CONTRIBUTORS;
 import static db.tables.MasterPlaylists.MASTER_PLAYLISTS;
@@ -39,6 +40,7 @@ public class MasterPlaylistAccessor extends Accessor {
 
         String listID = masterPlaylistResult.getValue(MASTER_PLAYLISTS.PLAYLIST_ID);
         String ownerID = masterPlaylistResult.getValue(MASTER_PLAYLISTS.OWNER_ID);
+        String name = masterPlaylistResult.getValue(MASTER_PLAYLISTS.PLAYLIST_NAME);
         int threshold = masterPlaylistResult.getValue(MASTER_PLAYLISTS.THRESHOLD);
         List<Song> songList = new ArrayList<Song>();
         List<String> collabs = new ArrayList<String>();
@@ -52,8 +54,21 @@ public class MasterPlaylistAccessor extends Accessor {
         for (Record record : masterContributors) {
             collabs.add(record.getValue(MASTER_CONTRIBUTORS.COLLAB_ID));
         }
-        MasterPlaylist playlistToReturn = new MasterPlaylist(listID, ownerID, threshold, songList, collabs);
-        return playlistToReturn;
+        return new MasterPlaylist(listID, ownerID, threshold, songList, collabs, name);
+    }
+
+    public List<MasterPlaylist> getPlaylistIDFromUser(String spotifyUserId){
+        List<String> playlistIDs = myQuery.select(MASTER_CONTRIBUTORS.PLAYLIST_ID).from(MASTER_CONTRIBUTORS).where(MASTER_CONTRIBUTORS.COLLAB_ID.equal(spotifyUserId))
+                .fetch().stream().map(record -> record.getValue(MASTER_CONTRIBUTORS.PLAYLIST_ID)).collect(Collectors.toList());
+        Result<Record> playlistRecord = myQuery.select().from(MASTER_PLAYLISTS).where(MASTER_PLAYLISTS.PLAYLIST_ID.in(playlistIDs)).fetch();
+        return playlistRecord.stream().map(
+                record -> new MasterPlaylist(
+                        record.getValue(MASTER_PLAYLISTS.PLAYLIST_ID),
+                        record.getValue(MASTER_PLAYLISTS.OWNER_ID),
+                        record.getValue(MASTER_PLAYLISTS.THRESHOLD),
+                        record.getValue(MASTER_PLAYLISTS.PLAYLIST_NAME)
+                )
+        ).collect(Collectors.toList());
     }
 
     public void addUserToPlaylist(String playlistID, String collabID) {
