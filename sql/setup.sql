@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
 /* PR Playlists table */
 CREATE TABLE IF NOT EXISTS master_playlists (
   playlist_id VARCHAR(50) NOT NULL, --this is the master playlist id on spotify (ie LIT AF)
+  playlist_name VARCHAR(255) NOT NULL,
   owner_id    VARCHAR(50) NOT NULL,
   threshold   INTEGER     NOT NULL
     CHECK (threshold >= 0 AND threshold <= 100  ), --this is the threshold for each song
