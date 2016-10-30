@@ -25,7 +25,7 @@ public class AuthService extends Service {
             throw new AuthException("state does not equal spr");
         }
 
-        if (error != null && !error.equals("")) {
+        if (error == null || error.equals("")) {
             // error exists
             throw new AuthException("error within Spotify");
         }
