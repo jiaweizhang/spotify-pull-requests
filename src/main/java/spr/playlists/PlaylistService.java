@@ -10,6 +10,8 @@ import com.wrapper.spotify.methods.PlaylistRequest;
 import com.wrapper.spotify.methods.UserPlaylistsRequest;
 import com.wrapper.spotify.models.Playlist;
 import com.wrapper.spotify.models.SimplePlaylist;
+import data.Contributor;
+import data.PlaylistPr;
 import org.json.JSONObject;
 import spr.exceptions.WrapperException;
 import spr.requestmodels.CreatePlaylistRequest;
@@ -99,12 +101,27 @@ public class PlaylistService extends Service {
                 createPlaylistRequest.accessToken);
 
         // create playlist in database
+        data.Playlist dataPlaylist = new data.Playlist(playlist.getId(),
+                playlist.getName(),
+                createPlaylistRequest.spotifyId,
+                createPlaylistRequest.threshold);
+        playlistAccessor.addPlaylist(dataPlaylist);
 
         // create playlist_pr in database
+        data.PlaylistPr dataPlaylistPR = new data.PlaylistPr(
+                playlistPR.getString("id"),
+                playlistPR.getString("name"),
+                createPlaylistRequest.spotifyId,
+                playlist.getName());
+        playlistPrAccessor.insert(dataPlaylistPR);
 
         // join playlist as a contributor
+        Contributor contributor = new Contributor(dataPlaylist.playlistId,
+                dataPlaylistPR.playlistId,
+                createPlaylistRequest.spotifyId);
+        contributorAccessor.addContributor(contributor);
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("playlist", playlist);
         map.put("playlistPR", playlistPR);
 
@@ -113,14 +130,27 @@ public class PlaylistService extends Service {
     }
 
     public StdResponse joinPlaylist(JoinPlaylistRequest joinPlaylistRequest) {
+        // the playlist ID is a pr
+        PlaylistPr playlistPr = playlistPrAccessor.getPlaylistPr(joinPlaylistRequest.playlistId);
+
+        String ownerId = playlistPr.ownerId;
+        Api ownerApi = getApi(ownerId);
+
+        Playlist ownerPlaylist = getPlaylistById(ownerId, playlistPr.parentPlaylistId, ownerApi);
+        Playlist ownerPlaylistPR = getPlaylistById(ownerId, playlistPr.playlistId, ownerApi);
+
         // join playlist as a contributor
+        Contributor contributor = new Contributor(playlistPr.parentPlaylistId,
+                playlistPr.playlistId,
+                joinPlaylistRequest.spotifyId);
+        contributorAccessor.addContributor(contributor);
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("playlist", null); //TODO
-        map.put("playlistPR", null); // TODO
+        map.put("playlist", ownerPlaylist); //TODO
+        map.put("playlistPR", ownerPlaylistPR); // TODO
 
         // return new JoinPlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", null);
+        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", map);
     }
 
     public StdResponse vote(VoteRequest voteRequest) {
