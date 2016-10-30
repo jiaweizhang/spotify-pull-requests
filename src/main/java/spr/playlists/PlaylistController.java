@@ -2,14 +2,12 @@ package spr.playlists;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spr.requestmodels.CreatePlaylistRequest;
 import spr.requestmodels.JoinPlaylistRequest;
 import spr.requestmodels.VoteRequest;
 import spr.std.Controller;
+import spr.std.models.StdRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,7 +32,7 @@ public class PlaylistController extends Controller {
         return wrap(playlistService.createPlaylist(createPlaylistRequest));
     }
 
-    @RequestMapping(value = "/invite",
+    @RequestMapping(value = "/join",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
@@ -50,5 +48,21 @@ public class PlaylistController extends Controller {
     public ResponseEntity vote(VoteRequest voteRequest, HttpServletRequest httpServletRequest) {
         pre(voteRequest, httpServletRequest);
         return wrap(playlistService.vote(voteRequest));
+    }
+
+    @RequestMapping(value = "/playlists",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getPlaylists(HttpServletRequest httpServletRequest) {
+        StdRequest stdRequest = pre(httpServletRequest);
+        return wrap(playlistService.getPlaylists(stdRequest));
+    }
+
+    @RequestMapping(value = "/playlist/{playlistId}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getPlaylistById(@PathVariable(value = "playlistId") String playlistId, HttpServletRequest httpServletRequest) {
+        StdRequest stdRequest = pre(httpServletRequest);
+        return wrap(playlistService.getPlaylistById(stdRequest, playlistId));
     }
 }

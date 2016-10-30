@@ -13,6 +13,7 @@ import spr.requestmodels.CreatePlaylistRequest;
 import spr.requestmodels.JoinPlaylistRequest;
 import spr.requestmodels.VoteRequest;
 import spr.std.Service;
+import spr.std.models.StdRequest;
 import spr.std.models.StdResponse;
 import spr.std.models.StdResponseWithBody;
 
@@ -62,7 +63,7 @@ public class PlaylistService extends Service {
         }
         // check to make sure individual playlist name isn't taken
         MasterPlaylist masterPlaylist = masterPlaylistAccessor.retrieve(joinPlaylistRequest.playlistId);
-        Playlist playlist = getPlaylist(masterPlaylist.myOwnerID, masterPlaylist.myPlaylistID, joinPlaylistRequest.api);
+        Playlist playlist = getPlaylistById(masterPlaylist.myOwnerID, masterPlaylist.myPlaylistID, joinPlaylistRequest.api);
         String playlistName = playlist.getName();
 
         Set<String> playlistNames = getPlaylists(joinPlaylistRequest.spotifyId, joinPlaylistRequest.api);
@@ -98,6 +99,18 @@ public class PlaylistService extends Service {
         return null;
     }
 
+    public StdResponse getPlaylists(StdRequest stdRequest) {
+
+
+        return null;
+    }
+
+    public StdResponse getPlaylistById(StdRequest stdRequest, String playlistId) {
+
+
+        return null;
+    }
+
     private Set<String> getPlaylists(String spotifyId, Api api) {
         final UserPlaylistsRequest request = api.getPlaylistsForUser(spotifyId).build();
         try {
@@ -112,7 +125,7 @@ public class PlaylistService extends Service {
         }
     }
 
-    private Playlist getPlaylist(String spotifyId, String playlistId, Api api) {
+    private Playlist getPlaylistById(String spotifyId, String playlistId, Api api) {
         final PlaylistRequest request = api.getPlaylist(spotifyId, playlistId).build();
 
         try {
