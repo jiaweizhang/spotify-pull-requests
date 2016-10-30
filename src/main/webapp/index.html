@@ -26,14 +26,15 @@
     <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
             <a class="nav-item" href="#/">Home</a>
-            <a class="nav-item" href="https://accounts.spotify.com/authorize/?client_id=7f5795cf20ba45b08ca27a4a8f92cf23&response_type=code&redirect_uri=http%3A%2F%2Feasywebapi.com%3A8080%2Fredirect&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private&state=spr"
-               ng-click="login()" ng-hide="isLoggedIn">
+            <a class="nav-item"
+               href="https://accounts.spotify.com/authorize/?client_id=7f5795cf20ba45b08ca27a4a8f92cf23&response_type=code&redirect_uri=http%3A%2F%2Feasywebapi.com%3A8080%2Fredirect&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private&state=spr"
+               ng-click="login()" ng-hide="loggedIn">
                 Login</a>
-            <a class="nav-item" href="#/logout" ng-show="isLoggedIn">Logout</a>
-            <a class="nav-item" href="#/" ng-show="isLoggedIn">Preferences</a>
+            <a class="nav-item" href="#/logout" ng-show="loggedIn">Logout</a>
+            <a class="nav-item" href="#/" ng-show="loggedIn">Preferences</a>
         </nav>
         <!--<form class="float-xs-right">-->
-            <!--<input type="text" class="form-control" placeholder="Search for a playlist...">-->
+        <!--<input type="text" class="form-control" placeholder="Search for a playlist...">-->
         <!--</form>-->
     </div>
 </nav>
@@ -41,7 +42,7 @@
 <div class="container-fluid" ng-controller="navbarCtrl">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="override-sidebar">
-            <ul class="nav nav-sidebar" ng-show="isLoggedIn">
+            <ul class="nav nav-sidebar" ng-show="loggedIn">
                 <li class="nav-left-hover">
                     <span class="helper"></span>
                     <i class="fa fa-plus-square-o fa-2x" id="icon-navbar-left" aria-hidden="true"></i>
@@ -52,7 +53,7 @@
 
                 </li>
             </ul>
-            <ul class="nav nav-sidebar" ng-show="isLoggedIn">
+            <ul class="nav nav-sidebar" ng-show="loggedIn">
                 <li class="navbar-left-header">PLAYLISTS</li>
                 <li ng-repeat="playlist in playlists">
                     <a href="#/playlistmanage/{{playlist.name}}">{{playlist.name}}</a>

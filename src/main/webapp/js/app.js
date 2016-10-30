@@ -51,11 +51,11 @@ spotifyCollab.run(function ($rootScope, $location) {
         if ($rootScope.checkCookies() == false) {
             console.log($location.path());
             /*
-            if ($location.path() == '/lumitrivia') {
-                console.log("Switching to login");
-                $location.path("/login");
-            }
-            */
+             if ($location.path() == '/lumitrivia') {
+             console.log("Switching to login");
+             $location.path("/login");
+             }
+             */
             $location.path("/");
             //if ($location.path() == '/login') {
             //    $location.path("/lumitrivia");

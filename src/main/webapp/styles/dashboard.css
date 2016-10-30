@@ -1,19 +1,23 @@
-.home-container{
+.home-container {
     margin-top: 10vh;
 }
+
 .home-container .home-container-inner {
     margin-left: 10vw;
     margin-right: 10vw;
 }
+
 .home-container .home-center {
     text-align: center;
 }
+
 .icon-text {
-    display: block; overflow: hidden;
+    display: block;
+    overflow: hidden;
 }
 
 #icon-navbar-left {
-    float:left;
+    float: left;
     color: white;
     margin-top: 25px;
     margin-left: 10px;
@@ -22,12 +26,14 @@
 
 .ico {
     display: inline-block;
-    float:left;
+    float: left;
 }
+
 .spotify-logo {
     margin-right: 5px;
     max-height: 33px;
 }
+
 /*
  * Base structure
  */
@@ -101,6 +107,7 @@ li.nav-left-hover {
     margin-right: 50px;
     margin-left: 0px;
 }
+
 .navbar-fixed-top {
     background-color: #191414;
     border-bottom-width: 2px;
