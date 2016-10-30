@@ -100,6 +100,7 @@ public class PlaylistService extends Service {
     }
 
     public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
+        System.out.println("beginning of create playlist title: " + createPlaylistRequest.playlistName);
         // create playlist
         JSONObject playlist = createPlaylist(createPlaylistRequest.spotifyId,
                 createPlaylistRequest.playlistName,
