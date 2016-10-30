@@ -16,7 +16,7 @@
     overflow: hidden;
 }
 
-#icon-navbar-left {
+.icon-navbar-left {
     float: left;
     color: white;
     margin-top: 25px;

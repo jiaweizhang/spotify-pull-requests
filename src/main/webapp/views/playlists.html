@@ -1,3 +1,19 @@
 <div ng-controller="playlistsController">
-    Playlists will go here
+    <div class="jumbotron">Your collaborative playlists</div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Playlist ID</th>
+            <th>Playlist Name</th>
+            <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="playlist in playlists">
+            <td ng-bind="playlist.id"></td>
+            <td ng-bind="playlist.name"></td>
+            <td ng-bind="playlist.href"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

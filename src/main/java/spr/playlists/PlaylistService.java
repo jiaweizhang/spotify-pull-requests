@@ -192,10 +192,10 @@ public class PlaylistService extends Service {
             // approve
             // add song to non-PR
             addSongToPlaylist(playlistPr.ownerId, request.songId, playlistPr.parentPlaylistId, ownerApi);
-            requestAccessor.deleteRequest(request.requestId);
+            //requestAccessor.deleteRequest(request.requestId);
         } else if (request.votesToDecline < 0) {
             // decline
-            requestAccessor.deleteRequest(request.requestId);
+            // requestAccessor.deleteRequest(request.requestId);
         }
 
         // return new VoteResponse

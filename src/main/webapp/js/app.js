@@ -68,6 +68,21 @@ spotifyCollab.controller('mainController', function ($scope) {
 
 spotifyCollab.controller('playlistsController', function ($scope, $http) {
     console.log("playlistscontroller started");
+
+    $scope.playlists = [];
+
+    $scope.getPlaylists = function () {
+        $http({
+            method: 'GET',
+            url: '/api/playlists',
+            headers: {'Authorization': localStorage.getItem('auth')}
+        }).then(function successCallback(response) {
+            $scope.requests = response.data.body;
+            console.log($scope.playlists);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
 });
 
 spotifyCollab.controller('playlistController', function ($scope, $http) {
