@@ -46,7 +46,7 @@ public class VotesAccessor extends Accessor {
         int numberOfPositiveVotes = voteList.stream().filter(vote -> vote.vote).collect(Collectors.toList()).size();
         int numberOfNegativeVotes = voteList.stream().filter(vote -> !vote.vote).collect(Collectors.toList()).size();
         request.votesToApprove = numberOfPositiveVotesNeeded - numberOfPositiveVotes;
-        request.votesToDecline = numberOfNegativeVotes - numberOfPositiveVotesNeeded;
+        request.votesToDecline = numberOfPositiveVotesNeeded - numberOfNegativeVotes;
         Map<Request, List<Vote>> outputMap = new HashMap<>();
         outputMap.put(request, voteList);
         return outputMap;
