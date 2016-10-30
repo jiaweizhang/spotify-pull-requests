@@ -16,7 +16,7 @@
     overflow: hidden;
 }
 
-#icon-navbar-left {
+.icon-navbar-left {
     float: left;
     color: white;
     margin-top: 20px;
@@ -206,7 +206,7 @@ li.nav-left-hover {
 
 /* footer */
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */

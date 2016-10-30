@@ -26,7 +26,7 @@ public class PlaylistController extends Controller {
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ResponseEntity createPlaylist(CreatePlaylistRequest createPlaylistRequest,
+    public ResponseEntity createPlaylist(@RequestBody CreatePlaylistRequest createPlaylistRequest,
                                          HttpServletRequest httpServletRequest) {
         pre(createPlaylistRequest, httpServletRequest);
         return wrap(playlistService.createPlaylist(createPlaylistRequest));
@@ -36,7 +36,7 @@ public class PlaylistController extends Controller {
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ResponseEntity joinPlaylist(JoinPlaylistRequest joinPlaylistRequest, HttpServletRequest httpServletRequest) {
+    public ResponseEntity joinPlaylist(@RequestBody JoinPlaylistRequest joinPlaylistRequest, HttpServletRequest httpServletRequest) {
         pre(joinPlaylistRequest, httpServletRequest);
         return wrap(playlistService.joinPlaylist(joinPlaylistRequest));
     }
@@ -45,7 +45,7 @@ public class PlaylistController extends Controller {
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ResponseEntity vote(VoteRequest voteRequest, HttpServletRequest httpServletRequest) {
+    public ResponseEntity vote(@RequestBody VoteRequest voteRequest, HttpServletRequest httpServletRequest) {
         pre(voteRequest, httpServletRequest);
         return wrap(playlistService.vote(voteRequest));
     }

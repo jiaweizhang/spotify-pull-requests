@@ -30,13 +30,13 @@ public class ContributorAccessor extends Accessor {
     }
 
     public List<PlaylistPr> getPlaylistPrBasedOnContributor(String contributorId) {
-        List<String> playlistPrIds = myQuery.select(CONTRIBUTORS.PLAYLIST_ID).from(CONTRIBUTORS)
-                .where(CONTRIBUTORS.SPOTIFY_ID.eq(contributorId)).fetch().map(record -> record.getValue(CONTRIBUTORS.PLAYLIST_ID));
-        return myQuery.select().from(PLAYLISTS_PR).where(PLAYLISTS_PR.PLAYLIST_ID.in(playlistPrIds)).fetch().stream().map(record -> new PlaylistPr(
-                record.getValue(PLAYLISTS_PR.PLAYLIST_ID),
-                record.getValue(PLAYLISTS_PR.PLAYLIST_NAME),
-                record.getValue(PLAYLISTS_PR.OWNER_ID),
-                record.getValue(PLAYLISTS_PR.PLAYLIST_ID)
-        )).collect(Collectors.toList());
+        return myQuery.select().from(PLAYLISTS_PR).join(CONTRIBUTORS)
+                .on(PLAYLISTS_PR.PLAYLIST_ID.equal(CONTRIBUTORS.PLAYLIST_PR_ID).and(CONTRIBUTORS.SPOTIFY_ID.equal(contributorId)))
+                .fetch().stream().map(record -> new PlaylistPr(
+                        record.getValue(PLAYLISTS_PR.PLAYLIST_ID),
+                        record.getValue(PLAYLISTS_PR.PLAYLIST_NAME),
+                        record.getValue(PLAYLISTS_PR.OWNER_ID),
+                        record.getValue(PLAYLISTS_PR.PARENT_PLAYLIST_ID)
+                )).collect(Collectors.toList());
     }
 }

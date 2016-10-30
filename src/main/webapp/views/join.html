@@ -1,0 +1,15 @@
+<div ng-controller="joinController">
+    <div class="jumbotron">Join a collaborative playlist</div>
+    <form>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-2 col-form-label">Playlist Id</label>
+            <div class="col-xs-10">
+                <input class="form-control" type="text" id="example-text-input" ng-init="playlistId=''"
+                       ng-model="playlistId">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="submit()">Join
+            Playlist
+        </button>
+    </form>
+</div>

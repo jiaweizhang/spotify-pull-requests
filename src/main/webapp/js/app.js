@@ -13,13 +13,21 @@ spotifyCollab.config(function ($routeProvider) {
             templateUrl: '../views/logout.html',
             controller: 'logoutCtrl'
         })
+        .when('/playlists', {
+            templateUrl: '../views/playlists.html',
+            controller: 'playlistsController'
+        })
+        .when('/playlist', {
+            templateUrl: '../views/playlist.html',
+            controller: 'playlistController'
+        })
         .when('/playlistcreate', {
             templateUrl: '../views/playlist_create.html',
             controller: 'playlistCreateCtrl'
         })
-        .when('/playlistmanage/:param', {
-            templateUrl: '../views/playlist_manage.html',
-            controller: 'playlistManageCtrl'
+        .when('/join', {
+            templateUrl: '../views/join.html',
+            controller: 'joinController'
         })
         .otherwise({
             templateUrl: '../views/home.html',
@@ -51,8 +59,95 @@ spotifyCollab.run(function ($rootScope, $location) {
     });
 });
 
-myApp.controller('mainController', function ($scope) {
+spotifyCollab.controller('mainController', function ($scope) {
     $scope.logout = function () {
+        console.log("logged out");
         localStorage.removeItem('auth');
     }
+});
+
+spotifyCollab.controller('playlistsController', function ($scope, $http) {
+    $scope.playlists = [];
+
+    $scope.getPlaylists = function () {
+        $http({
+            method: 'GET',
+            url: '/api/playlists',
+            headers: {'Authorization': localStorage.getItem('auth')}
+        }).then(function successCallback(response) {
+            $scope.playlists = response.data.body;
+            console.log($scope.playlists);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.init = function () {
+        $scope.getPlaylists();
+    };
+
+    $scope.init();
+});
+
+spotifyCollab.controller('playlistController', function ($scope, $http) {
+    $scope.playlistId = window.location.href.split('#')[2];
+
+    $scope.requests = [];
+
+    $scope.getPlaylist = function () {
+        $http({
+            method: 'GET',
+            url: '/api/playlist/' + $scope.playlistId,
+            headers: {'Authorization': localStorage.getItem('auth')}
+        }).then(function successCallback(response) {
+            $scope.requests = response.data.body;
+            console.log($scope.requests);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.vote = function (requestId, accept) {
+        var voteData = {
+            requestId: requestId,
+            accept: accept
+        };
+        $http({
+            method: 'POST',
+            url: '/api/vote',
+            headers: {'Authorization': localStorage.getItem('auth')},
+            data: voteData
+        }).then(function successCallback(response) {
+            console.log(response);
+            $scope.requests = $scope.getPlaylist();
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.init = function () {
+        $scope.getPlaylist();
+    };
+
+    $scope.init();
+});
+
+spotifyCollab.controller('joinController', function ($scope, $http) {
+
+    $scope.submit = function () {
+        var joinData = {
+            playlistId: $scope.playlistId
+        };
+        $http({
+            method: 'POST',
+            url: '/api/join',
+            headers: {'Authorization': localStorage.getItem('auth')},
+            data: joinData
+        }).then(function successCallback(response) {
+            console.log(response);
+            window.location = '/#/playlist#' + $scope.playlistId;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
 });

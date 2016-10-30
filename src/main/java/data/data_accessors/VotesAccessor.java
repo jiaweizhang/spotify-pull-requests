@@ -36,7 +36,7 @@ public class VotesAccessor extends Accessor {
                 .fetchOne().getValue(PLAYLISTS.THRESHOLD);
         int numberOfContributors = myQuery.select().from(CONTRIBUTORS).where(CONTRIBUTORS.PLAYLIST_PR_ID
                 .equal(playlistInfo.getValue(PLAYLISTS_PR.PLAYLIST_ID))).fetchCount();
-        List<Vote> voteList = myQuery.select().from(VOTE_TABLE).where(VOTE_TABLE.REQUEST_ID.in(request.requestId))
+        List<Vote> voteList = myQuery.select().from(VOTE_TABLE).where(VOTE_TABLE.REQUEST_ID.equal(request.requestId))
                 .fetch().stream().map(voteRecord -> new Vote(
                         voteRecord.getValue(VOTE_TABLE.REQUEST_ID),
                         voteRecord.getValue(VOTE_TABLE.SPOTIFY_ID),
@@ -59,9 +59,8 @@ public class VotesAccessor extends Accessor {
                 .values(vote.requestId, vote.spotifyId, vote.vote).execute();
     }
 
-    public int deleteVote(Vote vote) {
+    public int deleteVote(int requestId) {
         return myQuery.delete(VOTE_TABLE)
-                .where(VOTE_TABLE.REQUEST_ID.equal(vote.requestId)
-                        .and(VOTE_TABLE.SPOTIFY_ID.equal(vote.spotifyId))).execute();
+                .where(VOTE_TABLE.REQUEST_ID.equal(requestId)).execute();
     }
 }

@@ -35,25 +35,13 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 public class PlaylistService extends Service {
 
-    private static List<SimplePlaylist> getPlaylists(String spotifyId, Api api) {
-        final UserPlaylistsRequest request = api.getPlaylistsForUser(spotifyId).build();
-        try {
-            return request.get()
-                    .getItems()
-                    .stream()
-                    .collect(Collectors.toList());
-
-        } catch (Exception e) {
-            throw new WrapperException();
-        }
-    }
-
     private static Playlist getPlaylistById(String spotifyId, String playlistId, Api api) {
         final PlaylistRequest request = api.getPlaylist(spotifyId, playlistId).build();
 
         try {
             return request.get();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new WrapperException();
         }
     }
@@ -101,12 +89,12 @@ public class PlaylistService extends Service {
     public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
         // create playlist
         JSONObject playlist = createPlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName,
+                createPlaylistRequest.playlistTitle,
                 createPlaylistRequest.accessToken);
 
         // create playlist_pr
         JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName + "_PR",
+                createPlaylistRequest.playlistTitle + "_PR",
                 createPlaylistRequest.accessToken);
 
         // create playlist in database
@@ -150,29 +138,21 @@ public class PlaylistService extends Service {
         // the playlist ID is a pr
         PlaylistPr playlistPr = playlistPrAccessor.getPlaylistPr(joinPlaylistRequest.playlistId);
 
-        String ownerId = playlistPr.ownerId;
-        Api ownerApi = getApi(ownerId);
-
-        Playlist ownerPlaylist = getPlaylistById(ownerId, playlistPr.parentPlaylistId, ownerApi);
-        Playlist ownerPlaylistPR = getPlaylistById(ownerId, playlistPr.playlistId, ownerApi);
-
         // join playlist as a contributor
         Contributor contributor = new Contributor(playlistPr.parentPlaylistId,
                 playlistPr.playlistId,
                 joinPlaylistRequest.spotifyId);
         contributorAccessor.addContributor(contributor);
 
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("playlist", ownerPlaylist); //TODO
-        map.put("playlistPR", ownerPlaylistPR); // TODO
-
         // return new JoinPlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", map);
+        return new StdResponse(200, true, "Successfully joined collaborative playlist");
     }
 
     public StdResponse vote(VoteRequest voteRequest) {
         // add the vote
-        Vote vote = new Vote(voteRequest.requestId, voteRequest.spotifyId, voteRequest.approve);
+        Vote vote = new Vote(voteRequest.requestId, voteRequest.spotifyId, !voteRequest.approve);
+        System.out.println(voteRequest.requestId);
+        System.out.println(voteRequest.spotifyId);
         votesAccessor.addVote(vote);
 
         // determine if vote causes song to pass threshold
@@ -188,9 +168,11 @@ public class PlaylistService extends Service {
             // approve
             // add song to non-PR
             addSongToPlaylist(playlistPr.ownerId, request.songId, playlistPr.parentPlaylistId, ownerApi);
+            votesAccessor.deleteVote(request.requestId);
             requestAccessor.deleteRequest(request.requestId);
         } else if (request.votesToDecline < 0) {
             // decline
+            votesAccessor.deleteVote(request.requestId);
             requestAccessor.deleteRequest(request.requestId);
         }
 
@@ -204,7 +186,7 @@ public class PlaylistService extends Service {
     }
 
     public void addSongToPlaylist(String spotifyId, String songId, String playlistId, Api api) {
-        final List<String> tracksToAdd = Collections.singletonList(songId);
+        final List<String> tracksToAdd = Collections.singletonList("spotify:track:" + songId);
 
         final AddTrackToPlaylistRequest request = api.addTracksToPlaylist(spotifyId, playlistId, tracksToAdd)
                 .build();
@@ -218,11 +200,18 @@ public class PlaylistService extends Service {
     }
 
     public StdResponse getPlaylistPRById(StdRequest stdRequest, String playlistId) {
+        PlaylistPr playlistPr = playlistPrAccessor.getPlaylistPr(playlistId);
+        Api ownerApi = getApi(playlistPr.ownerId);
+
         // refresh the requests related to the PR
-        Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
+        Playlist playlist = getPlaylistById(playlistPr.ownerId, playlistId, ownerApi);
+
+        playlist.getTracks().getItems().forEach(System.out::println);
 
         Set<String> requests = requestAccessor.returnRequests(playlistId).stream()
                 .map(r -> r.songId).collect(Collectors.toSet());
+
+        System.out.println(Arrays.toString(requests.toArray()));
 
         List<Request> toAdd = playlist.getTracks().getItems().stream()
                 .filter(t -> !requests.contains(t.getTrack().getId()))

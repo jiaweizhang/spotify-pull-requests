@@ -24,40 +24,48 @@
 <nav class="navbar navbar-dark navbar-fixed-top" id="navbar-border">
     <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar"
             aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
-    <a class="navbar-brand" href="#/">
+    <a class="navbar-brand" href="/">
         <img class="spotify-logo"
              src="resources/Spotify_Icon_RGB_Green.png">
         Spotify Collab</a>
     <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
-            <a class="nav-item" href="#/">Home</a>
+            <a class="nav-item" href="/">Home</a>
             <a class="nav-item"
                href="https://accounts.spotify.com/authorize/?client_id=7f5795cf20ba45b08ca27a4a8f92cf23&response_type=code&redirect_uri=http%3A%2F%2Feasywebapi.com%3A8080%2Fredirect&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20user-read-email%20playlist-read-collaborative&state=spr"
                ng-hide="loggedIn">Login</a>
-            <a class="nav-item" ng-click="logout()" ng-show="loggedIn">Logout</a>
-            <a class="nav-item" href="#/" ng-show="loggedIn">Preferences</a>
+            <a class="nav-item" href="/" ng-click="logout()" ng-show="loggedIn">Logout</a>
         </nav>
     </div>
 </nav>
 
-<div class="container-fluid" ng-controller="playlistManageCtrl">
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="override-sidebar">
             <ul class="nav nav-sidebar" ng-show="loggedIn">
                 <li class="nav-left-hover">
                     <span class="helper"></span>
-                    <i class="fa fa-plus-square-o fa-2x" id="icon-navbar-left" aria-hidden="true"></i>
+                    <i class="fa fa-plus-square-o fa-2x icon-navbar-left" aria-hidden="true"></i>
 
                     <a style="overflow:hidden;" href="#/playlistcreate">
                         New collaborative playlist
                     </a>
-
                 </li>
-            </ul>
-            <ul class="nav nav-sidebar" ng-show="loggedIn">
-                <li class="navbar-left-header">PLAYLISTS</li>
-                <li ng-repeat="playlist in playlists">
-                    <a href="#/playlistmanage/{{playlist.name}}">{{playlist.name}}</a>
+                <li class="nav-left-hover">
+                    <span class="helper"></span>
+                    <i class="fa fa-music fa-2x icon-navbar-left" aria-hidden="true"></i>
+
+                    <a style="overflow:hidden;" href="#/playlists">
+                        Your collaborative playlists
+                    </a>
+                </li>
+                <li class="nav-left-hover">
+                    <span class="helper"></span>
+                    <i class="fa fa-users fa-2x icon-navbar-left" aria-hidden="true"></i>
+
+                    <a style="overflow:hidden;" href="#/join">
+                        Join collaborative playlist
+                    </a>
                 </li>
             </ul>
         </div>
@@ -76,6 +84,5 @@
 <script src="js/controllers/navbar.js"></script>
 <script src="js/controllers/home.js"></script>
 <script src="js/controllers/playlistCreate.js"></script>
-<script src="js/controllers/playlistManage.js"></script>
 </body>
 </html>
