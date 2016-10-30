@@ -14,11 +14,11 @@ spotifyCollab.config(function ($routeProvider) {
             controller: 'logoutCtrl'
         })
         .when('/playlists', {
-            templateurl: '../views/playlists.html',
+            templateUrl: '../views/playlists.html',
             controller: 'playlistsController'
         })
         .when('/playlist', {
-            templateurl: '../views/playlist.html',
+            templateUrl: '../views/playlist.html',
             controller: 'playlistController'
         })
         .when('/playlistcreate', {
