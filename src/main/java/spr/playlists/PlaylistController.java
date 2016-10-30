@@ -63,6 +63,6 @@ public class PlaylistController extends Controller {
     @ResponseBody
     public ResponseEntity getPlaylistById(@PathVariable(value = "playlistId") String playlistId, HttpServletRequest httpServletRequest) {
         StdRequest stdRequest = pre(httpServletRequest);
-        return wrap(playlistService.getPlaylistById(stdRequest, playlistId));
+        return wrap(playlistService.getPlaylistPRById(stdRequest, playlistId));
     }
 }

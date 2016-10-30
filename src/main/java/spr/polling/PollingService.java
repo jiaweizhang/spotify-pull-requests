@@ -18,7 +18,7 @@ public class PollingService extends Service {
         ScheduledExecutorService execService = Executors.newScheduledThreadPool(1);
         execService.scheduleWithFixedDelay(() -> {
             // TODO
-            // iterate through all individual playlists and add to master PR playlist
+            // query all PR playlists
 
         }, 0, 60, TimeUnit.SECONDS);
         return new StdResponse(200, true, "Polling service started");

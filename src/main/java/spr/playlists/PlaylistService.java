@@ -5,6 +5,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import com.wrapper.spotify.Api;
+import com.wrapper.spotify.methods.AddTrackToPlaylistRequest;
 import com.wrapper.spotify.methods.PlaylistCreationRequest;
 import com.wrapper.spotify.methods.PlaylistRequest;
 import com.wrapper.spotify.methods.UserPlaylistsRequest;
@@ -12,6 +13,8 @@ import com.wrapper.spotify.models.Playlist;
 import com.wrapper.spotify.models.SimplePlaylist;
 import data.Contributor;
 import data.PlaylistPr;
+import data.Request;
+import data.Vote;
 import org.json.JSONObject;
 import spr.exceptions.WrapperException;
 import spr.requestmodels.CreatePlaylistRequest;
@@ -22,9 +25,7 @@ import spr.std.models.StdRequest;
 import spr.std.models.StdResponse;
 import spr.std.models.StdResponseWithBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -155,20 +156,69 @@ public class PlaylistService extends Service {
 
     public StdResponse vote(VoteRequest voteRequest) {
         // add the vote
+        Vote vote = new Vote(voteRequest.requestId, voteRequest.spotifyId, voteRequest.approve);
+        votesAccessor.addVote(vote);
 
         // determine if vote causes song to pass threshold
+        Map<Request, List<Vote>> voteMap = votesAccessor.getVotes(voteRequest.requestId);
+
+        Request request = voteMap.keySet().stream().collect(Collectors.toList()).get(0);
+        List<Vote> votes = voteMap.get(request);
+
+        PlaylistPr playlistPr = playlistPrAccessor.getPlaylistPr(request.playlistId);
+        Api ownerApi = getApi(playlistPr.ownerId);
+
+        if (request.votesToApprove <= 0) {
+            // approve
+            // add song to non-PR
+            addSongToPlaylist(playlistPr.ownerId, request.songId, playlistPr.parentPlaylistId, ownerApi);
+            requestAccessor.deleteRequest(request.requestId);
+        } else if (request.votesToDecline < 0) {
+            // decline
+            requestAccessor.deleteRequest(request.requestId);
+        }
 
         // return new VoteResponse
-        return null;
+        return new StdResponse(200, true, "Successfully voted");
     }
 
     public StdResponse getPlaylists(StdRequest stdRequest) {
-        // return simply every playlist
-        return null;
+        List<PlaylistPr> playlistPrList = contributorAccessor.getPlaylistPrBasedOnContributor(stdRequest.spotifyId);
+        return new StdResponseWithBody(200, true, "Successfully returned playlists", playlistPrList);
     }
 
-    public StdResponse getPlaylistById(StdRequest stdRequest, String playlistId) {
+    public void addSongToPlaylist(String spotifyId, String songId, String playlistId, Api api) {
+        final List<String> tracksToAdd = Collections.singletonList(songId);
+
+        final AddTrackToPlaylistRequest request = api.addTracksToPlaylist(spotifyId, playlistId, tracksToAdd)
+                .build();
+
+        try {
+            request.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WrapperException();
+        }
+    }
+
+    public StdResponse getPlaylistPRById(StdRequest stdRequest, String playlistId) {
+        // refresh the requests related to the PR
         Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
-        return new StdResponseWithBody(200, true, "Successfully retrieved", playlist);
+
+        Set<String> requests = requestAccessor.returnRequests(playlistId).stream()
+                .map(r -> r.songId).collect(Collectors.toSet());
+
+        List<Request> toAdd = playlist.getTracks().getItems().stream()
+                .filter(t -> !requests.contains(t.getTrack().getId()))
+                .map(t -> new Request(-1, playlist.getId(), t.getAddedBy().getId(), t.getTrack().getId()))
+                .collect(Collectors.toList());
+
+        for (Request request : toAdd) {
+            requestAccessor.addRequest(request);
+        }
+
+        List<Request> requestList = requestAccessor.returnRequests(playlistId);
+        return new StdResponseWithBody(200, true, "Successfully retrieved", requestList);
+
     }
 }
