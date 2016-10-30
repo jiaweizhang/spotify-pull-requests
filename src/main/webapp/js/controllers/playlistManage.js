@@ -11,7 +11,7 @@ spotifyCollab
                     return $rootScope.playlists[i].id;
                 }
             }
-        }
+        };
         var selectedPlaylistId = findPlaylistId(selectedPlaylistName);
 
         console.log("Selected Playlist ID: "+selectedPlaylistId);
@@ -28,7 +28,7 @@ spotifyCollab
             url: '/api/playlists/'+selectedPlaylistId,
             headers: {'Authorization':localStorage.getItem('auth')}
         }).then(function successCallback(response) {
-            var data = response.data;
+            var data = response.data.body;
             var parsedData = JSON.parse(data);
             for (var i = 0; i < parsedData.length; i++) {
                 $scope.playlistSongs.push(parsedData[i]);

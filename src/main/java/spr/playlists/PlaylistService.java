@@ -98,7 +98,7 @@ public class PlaylistService extends Service {
 
         // create playlist_pr
         JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName,
+                createPlaylistRequest.playlistName + "_PR",
                 createPlaylistRequest.accessToken);
 
         // create playlist in database

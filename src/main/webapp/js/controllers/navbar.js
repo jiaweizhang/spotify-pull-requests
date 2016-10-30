@@ -12,7 +12,7 @@ spotifyCollab
             url: '/api/playlists',
             headers: {'Authorization':localStorage.getItem('auth')}
         }).then(function successCallback(response) {
-            var data = response.data;
+            var data = response.data.body;
             var parsedData = JSON.parse(data);
             var newPlaylists = [];
             for (var i = 0; i < parsedData.length; i++) {
