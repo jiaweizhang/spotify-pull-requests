@@ -13,6 +13,10 @@ spotifyCollab.config(function ($routeProvider) {
             templateUrl: '../views/logout.html',
             controller: 'logoutCtrl'
         })
+        .when('/playlist/:param', {
+            templateurl: '../views/playlist.html',
+            controller: 'playlistController'
+        })
         .when('/playlistcreate', {
             templateUrl: '../views/playlist_create.html',
             controller: 'playlistCreateCtrl'
@@ -54,5 +58,29 @@ spotifyCollab.run(function ($rootScope, $location) {
 spotifyCollab.controller('mainController', function ($scope) {
     $scope.logout = function () {
         localStorage.removeItem('auth');
+    }
+});
+
+spotifyCollab.controller('playlistController', function($scope, $http, $routeParams) {
+    var playlistId = $routeParams.param;
+
+    console.log(playlistId);
+    $scope.playlists = [];
+
+    $scope.getPlaylists = function() {
+        $http({
+            method: 'GET',
+            url: '/api/playlists',
+            headers: {'Authorization': localStorage.getItem('auth')}
+        }).then(function successCallback(response) {
+            $scope.playlists = response.data.body;
+            console.log($scope.playLists);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.init = function () {
+        $scope.getPlaylists();
     }
 });
