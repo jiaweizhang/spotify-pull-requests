@@ -28,6 +28,7 @@ public class PlaylistController extends Controller {
     @ResponseBody
     public ResponseEntity createPlaylist(CreatePlaylistRequest createPlaylistRequest,
                                          HttpServletRequest httpServletRequest) {
+        System.out.println(createPlaylistRequest.playlistName);
         pre(createPlaylistRequest, httpServletRequest);
         return wrap(playlistService.createPlaylist(createPlaylistRequest));
     }

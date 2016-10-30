@@ -6,8 +6,8 @@ spotifyCollab
         $scope.submit = function () {
             var playlistData =
             {
-                'playlistName': $scope.playlistName,
-                'threshold': parseInt($scope.threshold)
+                playlistName: $scope.playlistName,
+                threshold: parseInt($scope.threshold)
             };
 
             var parameter = JSON.stringify(playlistData);
