@@ -33,7 +33,7 @@ public class Service {
         if (authAccessor.isExist(stdRequest.spotifyId)) {
             // if exists, check that access_token is not expired
             Users user = authAccessor.getUser(stdRequest.spotifyId);
-            if (user.expiration.after(new Timestamp(System.currentTimeMillis()))) {
+            if (user.expiration.before(new Timestamp(System.currentTimeMillis()))) {
                 // expired
                 TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.refreshToken);
                 user.accessToken = tokenResponse.access_token;
