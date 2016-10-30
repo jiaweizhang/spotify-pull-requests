@@ -3,11 +3,12 @@
  */
 spotifyCollab
     .controller('playlistCreateCtrl', function ($scope, $rootScope, $http) {
-        $scope.playlistName = "";
-        $scope.threshold = ""; // make sure threshold validated as an int
-
         $scope.submit = function () {
-            var playlistData = {playlistName: $scope.playlistName, threshold: $scope.threshold};
+            var playlistData =
+            {
+                'playlistName': $scope.playlistName,
+                'threshold': parseInt($scope.threshold)
+            };
             $http({
                 method: 'POST',
                 url: '/api/playlists',
