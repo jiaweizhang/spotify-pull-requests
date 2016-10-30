@@ -1,6 +1,7 @@
 package data.data_accessors;
 
 import data.PlaylistPr;
+import db.tables.PlaylistsPr;
 
 import static db.tables.PlaylistsPr.PLAYLISTS_PR;
 
