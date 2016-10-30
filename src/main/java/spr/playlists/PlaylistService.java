@@ -103,6 +103,7 @@ public class PlaylistService extends Service {
         JSONObject playlist = createPlaylist(createPlaylistRequest.spotifyId,
                 createPlaylistRequest.playlistName,
                 createPlaylistRequest.accessToken);
+        System.out.println(playlist.toString(4));
 
         // create playlist_pr
         JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
