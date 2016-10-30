@@ -6,7 +6,6 @@ import com.wrapper.spotify.methods.PlaylistRequest;
 import com.wrapper.spotify.methods.UserPlaylistsRequest;
 import com.wrapper.spotify.models.Playlist;
 import com.wrapper.spotify.models.SimplePlaylist;
-import data.MasterPlaylist;
 import spr.exceptions.MembershipException;
 import spr.exceptions.WrapperException;
 import spr.requestmodels.CreatePlaylistRequest;

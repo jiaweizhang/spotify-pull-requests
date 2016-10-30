@@ -31,17 +31,17 @@ public class Service {
         if (authAccessor.isExist(spotifyId)) {
             // if exists, check that access_token is not expired
             Users user = authAccessor.getUser(spotifyId);
-            if (user.myExpiration.after(new Timestamp(System.currentTimeMillis()))) {
+            if (user.expiration.after(new Timestamp(System.currentTimeMillis()))) {
                 // expired
-                TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.myRefreshToken);
-                user.myAccessToken = tokenResponse.access_token;
-                user.myExpiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
+                TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.refreshToken);
+                user.accessToken = tokenResponse.access_token;
+                user.expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
 
                 // update access token and expiration
                 authAccessor.updateAccessTokenAndExpirationToken(user);
             }
 
-            return Api.builder().accessToken(user.myAccessToken).build();
+            return Api.builder().accessToken(user.accessToken).build();
         } else {
             // user does not exist
             throw new AuthException("User does not exist");
