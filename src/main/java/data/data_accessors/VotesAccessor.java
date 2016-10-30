@@ -1,11 +1,8 @@
 package data.data_accessors;
 
-import data.Playlist;
 import data.Request;
-import data.Song;
 import data.Vote;
 import org.jooq.Record;
-import org.jooq.Result;
 
 import java.util.HashMap;
 import java.util.List;
