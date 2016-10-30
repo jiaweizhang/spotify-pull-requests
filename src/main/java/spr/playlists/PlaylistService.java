@@ -66,6 +66,7 @@ public class PlaylistService extends Service {
         try {
             return request.get();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new WrapperException();
         }
     }
