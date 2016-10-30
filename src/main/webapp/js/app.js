@@ -90,6 +90,8 @@ spotifyCollab.controller('playlistsController', function ($scope, $http) {
 });
 
 spotifyCollab.controller('playlistController', function ($scope, $http) {
+    $scope.embedUrl = "https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
+
     $scope.playlistId = window.location.href.split('#')[2];
 
     $scope.requests = [];
@@ -102,6 +104,13 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
         }).then(function successCallback(response) {
             $scope.requests = response.data.body;
             console.log($scope.requests);
+            for(var i = 0; i < $scope.requests.length; i++) {
+                $scope.embedUrl = "https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:" +
+                        $scope.requests[i]+",";
+            }
+            $scope.embedUrl = $scope.embedUrl.slice(0, -1);
+            $scope.embedUrl = $scope.embedUrl + "&theme=white";
+            console.log("Embedded url: "+$scope.embedUrl);
         }, function errorCallback(response) {
             console.log(response);
         });

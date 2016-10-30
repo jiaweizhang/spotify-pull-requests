@@ -30,11 +30,11 @@
         Spotify Collab</a>
     <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
-            <a class="nav-item" href="/">Home</a>
+            <a class="nav-item" href="#/">Home</a>
             <a class="nav-item"
                href="https://accounts.spotify.com/authorize/?client_id=7f5795cf20ba45b08ca27a4a8f92cf23&response_type=code&redirect_uri=http%3A%2F%2Feasywebapi.com%3A8080%2Fredirect&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20user-read-email%20playlist-read-collaborative&state=spr"
-               ng-hide="loggedIn">Login</a>
-            <a class="nav-item" href="/" ng-click="logout()" ng-show="loggedIn">Logout</a>
+            >Login</a>
+            <a class="nav-item" href="/" ng-click="logout()">Logout</a>
         </nav>
     </div>
 </nav>
@@ -42,7 +42,33 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="override-sidebar">
-            <ul class="nav nav-sidebar" ng-show="loggedIn">
+
+
+            <!--<table id="nav-table">-->
+                <!--<tr class="nav-left-hover">-->
+                    <!--<td class="icon-table">-->
+                        <!--<span class="helper"></span>-->
+                        <!--<i class="fa fa-plus-square-o fa-2x icon-navbar-left" aria-hidden="true"></i>-->
+                    <!--</td>-->
+                    <!--<td class="text-table">New collaborative playlist</td>-->
+                <!--</tr>-->
+                <!--<tr class="nav-left-hover">-->
+                    <!--<td class="icon-table">-->
+                        <!--<i class="fa fa-music fa-2x icon-navbar-left" aria-hidden="true"></i>-->
+                    <!--</td>-->
+                    <!--<td class="text-table">Your collaborative playlists</td>-->
+                <!--</tr>-->
+                <!--<tr class="nav-left-hover">-->
+                    <!--<td class="icon-table">-->
+                        <!--<i class="fa fa-users fa-2x icon-navbar-left" aria-hidden="true"></i>-->
+                    <!--</td>-->
+                    <!--<td class="text-table">Join collaborative playlist</td>-->
+                <!--</tr>-->
+            <!--</table>-->
+
+
+
+            <ul class="nav nav-sidebar">
                 <li class="nav-left-hover">
                     <span class="helper"></span>
                     <i class="fa fa-plus-square-o fa-2x icon-navbar-left" aria-hidden="true"></i>

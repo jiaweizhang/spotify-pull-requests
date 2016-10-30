@@ -1,3 +1,20 @@
+#nav-table td {
+    padding-top: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+.icon-table {
+    width: 4vw;
+    padding-left: 0px;
+}
+.text-table {
+    width: 12.5vw;
+    color: white;
+}
+
 .home-container {
     margin-top: 10vh;
 }
@@ -19,7 +36,7 @@
 .icon-navbar-left {
     float: left;
     color: white;
-    margin-top: 20px;
+    margin-top: 22px;
     margin-left: 10px;
     margin-right: 0px;
 }
@@ -80,6 +97,7 @@ li.nav-left-hover:hover {
 
 li.nav-left-hover {
     padding-left: 10px;
+    min-height: 40px;
 }
 
 /*
