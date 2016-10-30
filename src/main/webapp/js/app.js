@@ -67,8 +67,6 @@ spotifyCollab.controller('mainController', function ($scope) {
 });
 
 spotifyCollab.controller('playlistsController', function ($scope, $http) {
-    console.log("playlistscontroller started");
-
     $scope.playlists = [];
 
     $scope.getPlaylists = function () {
@@ -83,6 +81,12 @@ spotifyCollab.controller('playlistsController', function ($scope, $http) {
             console.log(response);
         });
     };
+
+    $scope.init = function() {
+        $scope.getPlaylists();
+    };
+
+    $scope.init();
 });
 
 spotifyCollab.controller('playlistController', function ($scope, $http) {
