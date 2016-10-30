@@ -36,7 +36,7 @@ public class ContributorAccessor extends Accessor {
                 record.getValue(PLAYLISTS_PR.PLAYLIST_ID),
                 record.getValue(PLAYLISTS_PR.PLAYLIST_NAME),
                 record.getValue(PLAYLISTS_PR.OWNER_ID),
-                record.getValue(PLAYLISTS_PR.PLAYLIST_ID)
+                record.getValue(PLAYLISTS_PR.PARENT_PLAYLIST_ID)
         )).collect(Collectors.toList());
     }
 }
