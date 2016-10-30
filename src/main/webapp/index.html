@@ -38,7 +38,7 @@
     </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="navbarCtrl">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="override-sidebar">
             <ul class="nav nav-sidebar">
@@ -54,11 +54,13 @@
             </ul>
             <ul class="nav nav-sidebar">
                 <li class="navbar-left-header">PLAYLISTS</li>
-                <li class="nav-left-hover"><a href="#/playlistmanage">Lit AF</a></li>
-                <li class="nav-left-hover"><a href="">Chill AF</a></li>
-                <li class="nav-left-hover"><a href="">Playlist 1</a></li>
-                <li class="nav-left-hover"><a href="">Playlist 2</a></li>
-                <li class="nav-left-hover"><a href="">Playlist 3</a></li>
+                <li ng-repeat="playlist in playlists"><a href="#/playlistmanage">{{playlist}}</a></li>
+                <!--<li class="nav-left-hover"><a href="#/playlistmanage">Lit AF</a></li>-->
+                <!--<li class="nav-left-hover"><a href="">Chill AF</a></li>-->
+                <!--<li class="nav-left-hover"><a href="">Playlist 1</a></li>-->
+                <!--<li class="nav-left-hover"><a href="">Playlist 2</a></li>-->
+                <!--<li class="nav-left-hover"><a href="">Playlist 3</a></li>-->
+
             </ul>
         </div>
         <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
@@ -79,6 +81,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
 
 <script src="js/app.js"></script>
+<script src="js/controllers/navbar.js"></script>
 <script src="js/controllers/home.js"></script>
 <script src="js/controllers/login.js"></script>
 <script src="js/controllers/logout.js"></script>
