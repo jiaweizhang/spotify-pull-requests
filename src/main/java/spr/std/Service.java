@@ -33,9 +33,6 @@ public class Service {
         if (authAccessor.isExist(stdRequest.spotifyId)) {
             // if exists, check that access_token is not expired
             Users user = authAccessor.getUser(stdRequest.spotifyId);
-            System.out.println("Updating request");
-            System.out.println(user.accessToken);
-            System.out.println(user.expiration);
             if (user.expiration.before(new Timestamp(System.currentTimeMillis()))) {
                 // expired
                 TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.refreshToken);
@@ -49,7 +46,6 @@ public class Service {
                 authAccessor.updateUser(user);
             }
             stdRequest.accessToken = "Bearer " + user.accessToken;
-            System.out.println(stdRequest.accessToken);
             stdRequest.api = Api.builder().accessToken(user.accessToken).build();
         } else {
             // user does not exist

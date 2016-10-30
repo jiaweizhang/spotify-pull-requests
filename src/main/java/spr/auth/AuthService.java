@@ -44,8 +44,6 @@ public class AuthService extends Service {
         try {
             final User user = request.get();
             String userId = user.getId();
-            System.out.println(user.toString());
-            System.out.println("userId: " + userId);
             String email = user.getEmail();
             Timestamp expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
             if (authAccessor.isExist(userId)) {
@@ -53,14 +51,12 @@ public class AuthService extends Service {
                 userData.accessToken = tokenResponse.access_token;
                 userData.refreshToken = tokenResponse.refresh_token;
                 userData.expiration = expiration;
-                int num = authAccessor.updateUser(userData);
-                System.out.println("authupdate: " + num);
+                authAccessor.updateUser(userData);
             } else {
                 // add user to table
                 Users userData = new Users(userId, email, code,
                         tokenResponse.refresh_token, tokenResponse.access_token, expiration);
-                System.out.println(email);
-                System.out.println("authcreate: " + authAccessor.createUser(userData));
+                authAccessor.createUser(userData);
 
             }
             return JwtUtility.generateToken(userId);
