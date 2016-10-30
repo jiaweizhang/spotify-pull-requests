@@ -25,9 +25,9 @@ spotifyCollab.config(function ($routeProvider) {
             templateUrl: '../views/playlist_create.html',
             controller: 'playlistCreateCtrl'
         })
-        .when('/playlistmanage', {
-            templateUrl: '../views/playlist_manage.html',
-            controller: 'playlistManageCtrl'
+        .when('/join', {
+            templateUrl: '../views/join.html',
+            controller: 'joinController'
         })
         .otherwise({
             templateUrl: '../views/home.html',
@@ -130,4 +130,24 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
     };
 
     $scope.init();
+});
+
+spotifyCollab.controller('joinController', function ($scope, $http) {
+
+    $scope.submit = function() {
+        var joinData = {
+            playlistId: $scope.playlistId
+        };
+        $http({
+            method: 'POST',
+            url: '/api/join',
+            headers: {'Authorization': localStorage.getItem('auth')},
+            data: joinData
+        }).then(function successCallback(response) {
+            console.log(response);
+            window.location = '/#/playlist#' + $scope.playlistId;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
 });
