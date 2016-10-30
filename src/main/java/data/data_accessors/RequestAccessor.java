@@ -16,9 +16,9 @@ public class RequestAccessor extends Accessor {
         super();
     }
 
-    public int addRequest(Request request) {
-        return myQuery.insertInto(REQUESTS, REQUESTS.REQUEST_ID, REQUESTS.PLAYLIST_ID, REQUESTS.SPOTIFY_ID, REQUESTS.SONG_ID)
-                .values(request.requestId, request.playlistId, request.spotifyId, request.songId).execute();
+    public void addRequest(Request request) {
+        myQuery.insertInto(REQUESTS, REQUESTS.PLAYLIST_ID, REQUESTS.SPOTIFY_ID, REQUESTS.SONG_ID)
+                .values(request.playlistId, request.spotifyId, request.songId).execute();
     }
 
     public int deleteRequest(int requestId) {
