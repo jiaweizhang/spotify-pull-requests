@@ -42,7 +42,7 @@ public class Service {
                 // update access token and expiration
                 authAccessor.updateUser(user);
             }
-            stdRequest.accessToken = user.accessToken;
+            stdRequest.accessToken = "Bearer " + user.accessToken;
             stdRequest.api = Api.builder().accessToken(user.accessToken).build();
         } else {
             // user does not exist
