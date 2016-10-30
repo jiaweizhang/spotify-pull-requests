@@ -13,7 +13,11 @@ spotifyCollab.config(function ($routeProvider) {
             templateUrl: '../views/logout.html',
             controller: 'logoutCtrl'
         })
-        .when('/playlist/:param', {
+        .when('/playlists', {
+            templateurl: '../views/playlists.html',
+            controller: 'playlistsController'
+        })
+        .when('/playlist', {
             templateurl: '../views/playlist.html',
             controller: 'playlistController'
         })
@@ -21,7 +25,7 @@ spotifyCollab.config(function ($routeProvider) {
             templateUrl: '../views/playlist_create.html',
             controller: 'playlistCreateCtrl'
         })
-        .when('/playlistmanage/:param', {
+        .when('/playlistmanage', {
             templateUrl: '../views/playlist_manage.html',
             controller: 'playlistManageCtrl'
         })
@@ -60,6 +64,10 @@ spotifyCollab.controller('mainController', function ($scope) {
         console.log("logged out");
         localStorage.removeItem('auth');
     }
+});
+
+spotifyCollab.controller('playlistsController', function ($scope, $http) {
+    console.log("playlistscontroller started");
 });
 
 spotifyCollab.controller('playlistController', function ($scope, $http) {
