@@ -16,13 +16,13 @@ public class RequestAccessor extends Accessor {
         super();
     }
 
-    public void addRequest(Request request) {
-        myQuery.insertInto(REQUESTS, REQUESTS.REQUEST_ID, REQUESTS.PLAYLIST_ID, REQUESTS.SPOTIFY_ID, REQUESTS.SONG_ID)
+    public int addRequest(Request request) {
+        return myQuery.insertInto(REQUESTS, REQUESTS.REQUEST_ID, REQUESTS.PLAYLIST_ID, REQUESTS.SPOTIFY_ID, REQUESTS.SONG_ID)
                 .values(request.requestId, request.playlistId, request.spotifyId, request.songId).execute();
     }
 
-    public void deleteRequest(int requestId) {
-        myQuery.delete(REQUESTS).where(REQUESTS.REQUEST_ID.equal(requestId)).execute();
+    public int deleteRequest(int requestId) {
+        return myQuery.delete(REQUESTS).where(REQUESTS.REQUEST_ID.equal(requestId)).execute();
     }
 
     public boolean isExist(int requestId) {
@@ -42,4 +42,5 @@ public class RequestAccessor extends Accessor {
         }
         return requestList;
     }
+
 }
