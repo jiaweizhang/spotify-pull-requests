@@ -7,13 +7,16 @@ import org.jooq.Result;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ankit on 10/29/2016.
- */
+
 public class RequestAccessor extends Accessor {
 
     public RequestAccessor() {
         super();
+    }
+
+    public void addRequest(Request request) {
+        myQuery.insertInto(Requests.REQUESTS, Requests.REQUESTS.REQUEST_ID, Requests.REQUESTS.PLAYLIST_ID, Requests.REQUESTS.SPOTIFY_ID, Requests.REQUESTS.SONG_ID)
+                .values(request.requestId, request.playlistId, request.spotifyId, request.songId).execute();
     }
 
     public void deleteRequest(int requestId) {

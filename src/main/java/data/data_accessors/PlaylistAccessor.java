@@ -2,9 +2,7 @@ package data.data_accessors;
 
 import data.Playlist;
 import db.tables.Playlists;
-/**
- * Created by Ankit on 10/29/2016.
- */
+
 public class PlaylistAccessor extends Accessor {
 
     public PlaylistAccessor() {
