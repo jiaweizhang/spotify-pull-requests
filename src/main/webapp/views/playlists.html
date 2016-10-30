@@ -3,16 +3,18 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>Playlist ID</th>
             <th>Playlist Name</th>
-            <th>Link</th>
+            <th>PR Link</th>
+            <th>Original Link</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="playlist in playlists">
-            <td ng-bind="playlist.id"></td>
-            <td ng-bind="playlist.name"></td>
-            <td ng-bind="playlist.href"></td>
+            <td><a ng-href="/#/playlist#{{playlist.playlistId}}">{{playlist.playlistName}}</a></td>
+            <td><a class="btn btn-default"
+                   ng-href="https://open.spotify.com/user/{{ownerId}}/playlist/{{playlist.playlistId}}">PR Link</a></td>
+            <td><a class="btn btn-primary"
+                   ng-href="https://open.spotify.com/user/{{ownerId}}/playlist/{{playlist.parentPlaylistId}}">OG Link</a></td>
         </tr>
         </tbody>
     </table>
