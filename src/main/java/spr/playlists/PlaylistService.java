@@ -1,5 +1,6 @@
 package spr.playlists;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -130,12 +131,20 @@ public class PlaylistService extends Service {
                 createPlaylistRequest.spotifyId);
         contributorAccessor.addContributor(contributor);
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("playlist", playlist);
-        map.put("playlistPR", playlistPR);
+        try {
+            Map<String, Object> pl1 = new ObjectMapper().readValue(playlist.toString(), HashMap.class);
+            Map<String, Object> pl2 = new ObjectMapper().readValue(playlistPR.toString(), HashMap.class);
 
-        // return new CreatePlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully created collaborative playlist", map);
+            Map<String, Object> map = new HashMap<>();
+            map.put("playlist", pl1);
+            map.put("playlistPR", pl2);
+
+            // return new CreatePlaylistResponse
+            return new StdResponseWithBody(200, true, "Successfully created collaborative playlist", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WrapperException();
+        }
     }
 
     public StdResponse joinPlaylist(JoinPlaylistRequest joinPlaylistRequest) {
