@@ -37,5 +37,9 @@ public class PlaylistPrAccessor extends Accessor {
                 .stream().map(record-> record.getValue(PLAYLISTS_PR.PLAYLIST_ID)).collect(Collectors.toList());
     }
 
+    public int delete(String playlistId){
+        return myQuery.delete(PLAYLISTS_PR).where(PLAYLISTS_PR.PLAYLIST_ID.equal(playlistId)).execute();
+    }
+
 
 }
