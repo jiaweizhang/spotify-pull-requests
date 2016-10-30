@@ -6,6 +6,7 @@ import data.data_accessors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import spr.exceptions.AuthException;
+import spr.std.models.StdRequest;
 import utilities.AuthUtility;
 import utilities.models.TokenResponse;
 
@@ -27,10 +28,10 @@ public class Service {
     @Autowired
     public JdbcTemplate jt;
 
-    public Api getApi(String spotifyId) {
-        if (authAccessor.isExist(spotifyId)) {
+    public void updateRequest(StdRequest stdRequest) {
+        if (authAccessor.isExist(stdRequest.spotifyId)) {
             // if exists, check that access_token is not expired
-            Users user = authAccessor.getUser(spotifyId);
+            Users user = authAccessor.getUser(stdRequest.spotifyId);
             if (user.myExpiration.after(new Timestamp(System.currentTimeMillis()))) {
                 // expired
                 TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.myRefreshToken);
@@ -40,8 +41,8 @@ public class Service {
                 // update access token and expiration
                 authAccessor.updateAccessTokenAndExpirationToken(user);
             }
-
-            return Api.builder().accessToken(user.myAccessToken).build();
+            stdRequest.accessToken = user.myAccessToken;
+            stdRequest.api = Api.builder().accessToken(user.myAccessToken).build();
         } else {
             // user does not exist
             throw new AuthException("User does not exist");

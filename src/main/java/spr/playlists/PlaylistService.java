@@ -1,13 +1,16 @@
 package spr.playlists;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.request.HttpRequestWithBody;
 import com.wrapper.spotify.Api;
 import com.wrapper.spotify.methods.PlaylistCreationRequest;
 import com.wrapper.spotify.methods.PlaylistRequest;
 import com.wrapper.spotify.methods.UserPlaylistsRequest;
 import com.wrapper.spotify.models.Playlist;
 import com.wrapper.spotify.models.SimplePlaylist;
-import data.MasterPlaylist;
-import spr.exceptions.MembershipException;
+import org.json.JSONObject;
 import spr.exceptions.WrapperException;
 import spr.requestmodels.CreatePlaylistRequest;
 import spr.requestmodels.JoinPlaylistRequest;
@@ -17,7 +20,9 @@ import spr.std.models.StdRequest;
 import spr.std.models.StdResponse;
 import spr.std.models.StdResponseWithBody;
 
-import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,88 +31,45 @@ import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class PlaylistService extends Service {
+
     public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
-        // check that name does not exist (or individual playlist name)
-        Set<String> playlistNames = getPlaylists(createPlaylistRequest.spotifyId, createPlaylistRequest.api);
-        if (playlistNames.contains(createPlaylistRequest.playlistName)) {
-            throw new IllegalArgumentException("Playlist name already taken");
-        } else if (playlistNames.contains(createPlaylistRequest.playlistName + "_PR")) {
-            throw new IllegalArgumentException("Playlist name_PR already taken");
-        }
-
-        // create new playlist
+        // create playlist
         Playlist playlist = createPlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName, createPlaylistRequest.api);
+                createPlaylistRequest.playlistName,
+                createPlaylistRequest.api);
 
-        // create individual playlist
-        Playlist individualPlaylist = createPlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName + "_PR", createPlaylistRequest.api);
+        // create playlist_pr
+        JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
+                createPlaylistRequest.playlistName,
+                createPlaylistRequest.accessToken);
 
-        // create master playlist in database
-        if (masterPlaylistAccessor.isExist(playlist.getId())) {
-            throw new IllegalArgumentException("playlist of that name already exists");
-        }
-        masterPlaylistAccessor.create(playlist.getId(), createPlaylistRequest.spotifyId, createPlaylistRequest.threshold);
+        // create playlist in database
 
-        // create individual playlist in database
-        if (individualPlaylistAccessor.isExist(individualPlaylist.getId())) {
-            throw new IllegalArgumentException("individual playlist of that name already exists");
-        }
-        individualPlaylistAccessor.addIndividualPlaylist(individualPlaylist.getId(),
-                createPlaylistRequest.spotifyId,
-                playlist.getId());
+        // create playlist_pr in database
 
-        // join as member of playlist
-        masterPlaylistAccessor.addUserToPlaylist(playlist.getId(), createPlaylistRequest.spotifyId);
+        // join playlist as a contributor
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("playlist", playlist);
+        map.put("playlistPR", playlistPR);
 
         // return new CreatePlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully created collaborative playlist", playlist);
+        return new StdResponseWithBody(200, true, "Successfully created collaborative playlist", map);
     }
 
     public StdResponse joinPlaylist(JoinPlaylistRequest joinPlaylistRequest) {
-        // check and make sure master exists
-        if (!masterPlaylistAccessor.isExist(joinPlaylistRequest.playlistId)) {
-            throw new IllegalArgumentException("playlist does not exist");
-        }
-        // check to make sure individual playlist name isn't taken
-        MasterPlaylist masterPlaylist = masterPlaylistAccessor.retrieve(joinPlaylistRequest.playlistId);
-        Playlist playlist = getPlaylistById(masterPlaylist.myOwnerID, masterPlaylist.myPlaylistID, joinPlaylistRequest.api);
-        String playlistName = playlist.getName();
+        // join playlist as a contributor
 
-        Set<String> playlistNames = getPlaylists(joinPlaylistRequest.spotifyId, joinPlaylistRequest.api);
-        if (playlistNames.contains(playlistName + "_PR")) {
-            throw new IllegalArgumentException("Playlist name_PR already taken");
-        }
-
-        // check to make sure not already member
-        if (masterPlaylist.myCollabs.contains(joinPlaylistRequest.spotifyId)) {
-            throw new MembershipException();
-        }
-
-        // join as member of playlist
-        masterPlaylistAccessor.addUserToPlaylist(joinPlaylistRequest.playlistId, joinPlaylistRequest.spotifyId);
-
-        // create individual playlist
-        Playlist individualPlaylist = createPlaylist(joinPlaylistRequest.spotifyId,
-                playlistName + "_PR", joinPlaylistRequest.api);
-
-        // create individual playlist in database
-        if (individualPlaylistAccessor.isExist(individualPlaylist.getId())) {
-            throw new IllegalArgumentException("individual playlist of that name already exists");
-        }
-        individualPlaylistAccessor.addIndividualPlaylist(individualPlaylist.getId(),
-                joinPlaylistRequest.spotifyId,
-                individualPlaylist.getId());
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("playlist", null); //TODO
+        map.put("playlistPR", null); // TODO
 
         // return new JoinPlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", playlist);
+        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", null);
     }
 
 
     public StdResponse vote(VoteRequest voteRequest) {
-        // TODO
-        // check that is part of the playlist
-
         // add the vote
 
         // determine if vote causes song to pass threshold
@@ -117,32 +79,29 @@ public class PlaylistService extends Service {
     }
 
     public StdResponse getPlaylists(StdRequest stdRequest) {
-
-
+        // return simply every playlist
         return null;
     }
 
     public StdResponse getPlaylistById(StdRequest stdRequest, String playlistId) {
-
-
-        return null;
+        Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
+        return new StdResponseWithBody(200, true, "Successfully retrieved", playlist);
     }
 
-    private Set<String> getPlaylists(String spotifyId, Api api) {
+    private static List<SimplePlaylist> getPlaylists(String spotifyId, Api api) {
         final UserPlaylistsRequest request = api.getPlaylistsForUser(spotifyId).build();
         try {
             return request.get()
                     .getItems()
                     .stream()
-                    .map(SimplePlaylist::getName)
-                    .collect(Collectors.toSet());
+                    .collect(Collectors.toList());
 
         } catch (Exception e) {
             throw new WrapperException();
         }
     }
 
-    private Playlist getPlaylistById(String spotifyId, String playlistId, Api api) {
+    private static Playlist getPlaylistById(String spotifyId, String playlistId, Api api) {
         final PlaylistRequest request = api.getPlaylist(spotifyId, playlistId).build();
 
         try {
@@ -152,7 +111,7 @@ public class PlaylistService extends Service {
         }
     }
 
-    private Playlist createPlaylist(String spotifyId, String title, Api api) {
+    private static Playlist createPlaylist(String spotifyId, String title, Api api) {
         final PlaylistCreationRequest request = api.createPlaylist(spotifyId, title)
                 .publicAccess(true)
                 .build();
@@ -160,6 +119,26 @@ public class PlaylistService extends Service {
         try {
             return request.get();
         } catch (Exception e) {
+            throw new WrapperException();
+        }
+    }
+
+    public static JSONObject createCollaborativePlaylist(String spotifyId, String title, String authHeader) {
+        HttpRequestWithBody http =
+                Unirest.post("https://api.spotify.com/v1/users/" + spotifyId + "/playlists");
+
+        try {
+            HttpResponse<JsonNode> httpResponse = http
+                    .header("Content-Type", "application/json")
+                    .header("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36")
+                    .header("Authorization", authHeader)
+                    .body("{\"name\":\"" + title + "\", \"public\":false, \"collaborative\":true}")
+                    .asJson();
+
+            JsonNode response = httpResponse.getBody();
+            return response.getObject();
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new WrapperException();
         }
     }

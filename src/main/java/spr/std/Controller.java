@@ -35,7 +35,7 @@ public class Controller {
             stdRequest.spotifyId = JwtUtility.retrieveSpotifyId(jwt);
 
             // update the Api in the stdRequest
-            stdRequest.api = service.getApi(stdRequest.spotifyId);
+            service.updateRequest(stdRequest);
         } catch (Exception e) {
             throw new AuthException("Jwt invalid");
         }

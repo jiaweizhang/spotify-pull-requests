@@ -8,4 +8,5 @@ import com.wrapper.spotify.Api;
 public class StdRequest {
     public String spotifyId;
     public Api api;
+    public String accessToken;
 }
