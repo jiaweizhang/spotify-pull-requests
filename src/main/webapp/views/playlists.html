@@ -1,18 +1,20 @@
 <div ng-controller="playlistsController">
     <div class="jumbotron">Your collaborative playlists</div>
-    <table class="table table-hover">
+    <table class="table table-condensed">
         <thead>
         <tr>
-            <th>Playlist ID</th>
             <th>Playlist Name</th>
-            <th>Link</th>
+            <th>PR Link</th>
+            <th>Original Link</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="playlist in playlists">
-            <td ng-bind="playlist.id"></td>
-            <td ng-bind="playlist.name"></td>
-            <td ng-bind="playlist.href"></td>
+            <td><h4><a ng-href="/#/playlist#{{playlist.playlistId}}">{{playlist.playlistName}}</a></h4></td>
+            <td><a class="btn btn-primary"
+                   ng-href="https://open.spotify.com/user/{{playlist.ownerId}}/playlist/{{playlist.playlistId}}">PR Link</a></td>
+            <td><a class="btn btn-primary"
+                   ng-href="https://open.spotify.com/user/{{playlist.ownerId}}/playlist/{{playlist.parentPlaylistId}}">OG Link</a></td>
         </tr>
         </tbody>
     </table>
