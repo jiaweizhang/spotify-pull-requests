@@ -48,9 +48,9 @@ public class AuthService extends Service {
             Timestamp expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
             if (authAccessor.isExist(userId)) {
                 Users userData = authAccessor.getUser(userId);
-                userData.myAccessToken = tokenResponse.access_token;
-                userData.myRefreshToken = tokenResponse.refresh_token;
-                userData.myExpiration = expiration;
+                userData.accessToken = tokenResponse.access_token;
+                userData.refreshToken = tokenResponse.refresh_token;
+                userData.expiration = expiration;
                 authAccessor.updateAccessTokenAndExpirationToken(userData);
             } else {
                 // add user to table

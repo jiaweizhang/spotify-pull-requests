@@ -8,6 +8,8 @@ public class Request {
     public String playlistId;
     public String spotifyId;
     public String songId;
+    public int votesToApprove;
+    public int votesToDecline;
 
     public Request(int requestId, String playlistId, String spotifyId, String songId) {
         this.requestId = requestId;
