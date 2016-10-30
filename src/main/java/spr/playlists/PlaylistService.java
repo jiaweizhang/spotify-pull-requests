@@ -223,16 +223,24 @@ public class PlaylistService extends Service {
         // refresh the requests related to the PR
         Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
 
+        System.out.println("dkfjdkfjd");
+        playlist.getTracks().getItems().forEach(System.out::println);
+
         Set<String> requests = requestAccessor.returnRequests(playlistId).stream()
                 .map(r -> r.songId).collect(Collectors.toSet());
+
+        System.out.println("dlkfjdlfkdjdlfkjdlfkdjf");
+        System.out.println(Arrays.toString(requests.toArray()));
 
         List<Request> toAdd = playlist.getTracks().getItems().stream()
                 .filter(t -> !requests.contains(t.getTrack().getId()))
                 .map(t -> new Request(-1, playlist.getId(), t.getAddedBy().getId(), t.getTrack().getId()))
                 .collect(Collectors.toList());
 
+        System.out.println("funsies");
         for (Request request : toAdd) {
             requestAccessor.addRequest(request);
+            System.out.println(request.requestId);
         }
 
         List<Request> requestList = requestAccessor.returnRequests(playlistId);
