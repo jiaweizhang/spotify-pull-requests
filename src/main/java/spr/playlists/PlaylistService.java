@@ -150,24 +150,14 @@ public class PlaylistService extends Service {
         // the playlist ID is a pr
         PlaylistPr playlistPr = playlistPrAccessor.getPlaylistPr(joinPlaylistRequest.playlistId);
 
-        String ownerId = playlistPr.ownerId;
-        Api ownerApi = getApi(ownerId);
-
-        Playlist ownerPlaylist = getPlaylistById(ownerId, playlistPr.parentPlaylistId, ownerApi);
-        Playlist ownerPlaylistPR = getPlaylistById(ownerId, playlistPr.playlistId, ownerApi);
-
         // join playlist as a contributor
         Contributor contributor = new Contributor(playlistPr.parentPlaylistId,
                 playlistPr.playlistId,
                 joinPlaylistRequest.spotifyId);
         contributorAccessor.addContributor(contributor);
 
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("playlist", ownerPlaylist); //TODO
-        map.put("playlistPR", ownerPlaylistPR); // TODO
-
         // return new JoinPlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", map);
+        return new StdResponse(200, true, "Successfully joined collaborative playlist");
     }
 
     public StdResponse vote(VoteRequest voteRequest) {
