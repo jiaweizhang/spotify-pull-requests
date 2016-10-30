@@ -19,4 +19,14 @@ public class PlaylistPrAccessor extends Accessor {
         return myQuery.select().from(PLAYLISTS_PR).where(PLAYLISTS_PR.PLAYLIST_ID.equal(playlistId)).fetchOne() != null;
     }
 
+    public PlaylistPr getPlaylistPr(String playlistId) {
+        return myQuery.select().from(PLAYLISTS_PR).where(PLAYLISTS_PR.PLAYLIST_ID.equal(playlistId)).fetchOne()
+                .map(record -> new PlaylistPr(
+                        record.getValue(PLAYLISTS_PR.PLAYLIST_ID),
+                        record.getValue(PLAYLISTS_PR.PLAYLIST_NAME),
+                        record.getValue(PLAYLISTS_PR.OWNER_ID),
+                        record.getValue(PLAYLISTS_PR.PARENT_PLAYLIST_ID)
+                ));
+    }
+
 }
