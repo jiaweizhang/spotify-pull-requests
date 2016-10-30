@@ -10,7 +10,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="playlist in playlists">
-            <td><h4><a ng-href="/#/playlist#{{playlist.playlistId}}" style="color:black;">{{playlist.playlistName}}</a></h4></td>
+            <td><a ng-href="/#/playlist#{{playlist.playlistId}}" style="color:black;">{{playlist.playlistName}}</a></td>
             <td><a class="btn btn-primary"
                    ng-href="https://open.spotify.com/user/{{playlist.ownerId}}/playlist/{{playlist.playlistId}}">PR Link</a></td>
             <td><a class="btn btn-primary"
