@@ -24,18 +24,18 @@
 <nav class="navbar navbar-dark navbar-fixed-top" id="navbar-border">
     <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar"
             aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
-    <a class="navbar-brand" href="#/">
+    <a class="navbar-brand" href="/">
         <img class="spotify-logo"
              src="resources/Spotify_Icon_RGB_Green.png">
         Spotify Collab</a>
     <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
-            <a class="nav-item" href="#/">Home</a>
+            <a class="nav-item" href="/">Home</a>
             <a class="nav-item"
                href="https://accounts.spotify.com/authorize/?client_id=7f5795cf20ba45b08ca27a4a8f92cf23&response_type=code&redirect_uri=http%3A%2F%2Feasywebapi.com%3A8080%2Fredirect&scope=playlist-read-private%20playlist-modify-public%20playlist-modify-private%20user-read-email%20playlist-read-collaborative&state=spr"
                ng-hide="loggedIn">Login</a>
-            <a class="nav-item" ng-click="logout()" ng-show="loggedIn">Logout</a>
-            <a class="nav-item" href="#/" ng-show="loggedIn">Preferences</a>
+            <a class="nav-item" href="/" ng-click="logout()" ng-show="loggedIn">Logout</a>
+            <a class="nav-item" href="/" ng-show="loggedIn">Preferences</a>
         </nav>
     </div>
 </nav>
@@ -52,12 +52,6 @@
                         New collaborative playlist
                     </a>
 
-                </li>
-            </ul>
-            <ul class="nav nav-sidebar" ng-show="loggedIn">
-                <li class="navbar-left-header">PLAYLISTS</li>
-                <li ng-repeat="playlist in playlists">
-                    <a href="#/playlistmanage/{{playlist.name}}">{{playlist.name}}</a>
                 </li>
             </ul>
         </div>
