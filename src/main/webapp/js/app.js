@@ -79,7 +79,7 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
     $scope.getPlaylists = function () {
         $http({
             method: 'GET',
-            url: '/api/playlists',
+            url: '/api/playlist/' + playlistId,
             headers: {'Authorization': localStorage.getItem('auth')}
         }).then(function successCallback(response) {
             $scope.requests = response.data.body;
