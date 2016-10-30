@@ -1,6 +1,7 @@
 .idea/
 build/
 .gradle/
+*.iml
 
 # secure files
 src/main/resources

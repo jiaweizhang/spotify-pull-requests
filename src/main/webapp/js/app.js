@@ -9,10 +9,6 @@ spotifyCollab.config(function ($routeProvider) {
             templateUrl: '../views/home.html',
             controller: 'homeCtrl'
         })
-        .when('/login', {
-            templateUrl: '../views/login.html',
-            controller: 'loginCtrl'
-        })
         .when('/logout', {
             templateUrl: '../views/logout.html',
             controller: 'logoutCtrl'

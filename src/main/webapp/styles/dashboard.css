@@ -1,3 +1,10 @@
+.home-container{
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+.home-container .home-center {
+    text-align: center;
+}
 .icon-text {
     display: block; overflow: hidden;
 }
