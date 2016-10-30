@@ -43,6 +43,7 @@ public class Service {
                 authAccessor.updateUser(user);
             }
             stdRequest.accessToken = "Bearer " + user.accessToken;
+            System.out.println(stdRequest.accessToken);
             stdRequest.api = Api.builder().accessToken(user.accessToken).build();
         } else {
             // user does not exist

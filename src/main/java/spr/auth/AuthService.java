@@ -62,7 +62,7 @@ public class AuthService extends Service {
             return JwtUtility.generateToken(userId);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new AuthException("Failure in AuthService");
         }
     }
 }
