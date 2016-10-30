@@ -17,7 +17,7 @@ spotifyCollab.config(function ($routeProvider) {
             templateUrl: '../views/playlist_create.html',
             controller: 'playlistCreateCtrl'
         })
-        .when('/playlistmanage', {
+        .when('/playlistmanage/:param', {
             templateUrl: '../views/playlist_manage.html',
             controller: 'playlistManageCtrl'
         })

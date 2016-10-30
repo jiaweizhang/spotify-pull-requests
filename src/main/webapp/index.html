@@ -43,7 +43,7 @@
             <ul class="nav nav-sidebar">
                 <li class="nav-left-hover">
                     <span class="helper"></span>
-                    <i class="fa fa-plus-square-o fa-lg" id="icon-navbar-left" aria-hidden="true"></i>
+                    <i class="fa fa-plus-square-o fa-2x" id="icon-navbar-left" aria-hidden="true"></i>
 
                     <a style="overflow:hidden;" href="#/playlistcreate">
                         New collaborative playlist
@@ -53,7 +53,9 @@
             </ul>
             <ul class="nav nav-sidebar">
                 <li class="navbar-left-header">PLAYLISTS</li>
-                <li ng-repeat="playlist in playlists"><a href="#/playlistmanage">{{playlist}}</a></li>
+                <li ng-repeat="playlist in playlists">
+                    <a href="#/playlistmanage/{{playlist.name}}">{{playlist.name}}</a>
+                </li>
                 <!--<li class="nav-left-hover"><a href="#/playlistmanage">Lit AF</a></li>-->
                 <!--<li class="nav-left-hover"><a href="">Chill AF</a></li>-->
                 <!--<li class="nav-left-hover"><a href="">Playlist 1</a></li>-->
