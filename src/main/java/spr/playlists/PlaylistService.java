@@ -35,25 +35,13 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 public class PlaylistService extends Service {
 
-    private static List<SimplePlaylist> getPlaylists(String spotifyId, Api api) {
-        final UserPlaylistsRequest request = api.getPlaylistsForUser(spotifyId).build();
-        try {
-            return request.get()
-                    .getItems()
-                    .stream()
-                    .collect(Collectors.toList());
-
-        } catch (Exception e) {
-            throw new WrapperException();
-        }
-    }
-
     private static Playlist getPlaylistById(String spotifyId, String playlistId, Api api) {
         final PlaylistRequest request = api.getPlaylist(spotifyId, playlistId).build();
 
         try {
             return request.get();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new WrapperException();
         }
     }
