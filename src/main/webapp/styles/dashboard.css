@@ -2,6 +2,14 @@
     display: block; overflow: hidden;
 }
 
+#icon-navbar-left {
+    float:left;
+    color: white;
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
 .ico {
     display: inline-block;
     float:left;
