@@ -71,7 +71,7 @@ spotifyCollab.controller('playlistsController', function ($scope, $http) {
 });
 
 spotifyCollab.controller('playlistController', function ($scope, $http) {
-    var playlistId = window.location.href.split('#')[1];
+    var playlistId = window.location.href.split('#')[2];
 
     console.log(playlistId);
     $scope.requests = [];
