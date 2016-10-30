@@ -2,6 +2,9 @@ package data.data_accessors;
 
 import data.PlaylistPr;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static db.tables.PlaylistsPr.PLAYLISTS_PR;
 
 public class PlaylistPrAccessor extends Accessor {
@@ -27,6 +30,11 @@ public class PlaylistPrAccessor extends Accessor {
                         record.getValue(PLAYLISTS_PR.OWNER_ID),
                         record.getValue(PLAYLISTS_PR.PARENT_PLAYLIST_ID)
                 ));
+    }
+
+    public List<String> getPlaylistPrId() {
+        return myQuery.select(PLAYLISTS_PR.PLAYLIST_ID).from(PLAYLISTS_PR).fetch()
+                .stream().map(record-> record.getValue(PLAYLISTS_PR.PLAYLIST_ID)).collect(Collectors.toList());
     }
 
 
