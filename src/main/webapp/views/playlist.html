@@ -5,12 +5,16 @@
         <tr>
             <th>Song ID</th>
             <th>Adder Name</th>
+            <th>Accept</th>
+            <th>Decline</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="request in requests">
             <td ng-bind="request.songId"></td>
             <td ng-bind="request.spotifyId"></td>
+            <td><button class="btn btn-success" ng-click="vote(request.requestId, true)">Accept</button></td>
+            <td><button class="btn btn-danger" ng-click="vote(request.requestId, false)">Decline</button></td>
         </tr>
         </tbody>
     </table>

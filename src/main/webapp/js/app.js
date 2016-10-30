@@ -89,6 +89,24 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
         });
     };
 
+    $scope.vote = function(requestId, accept) {
+        var voteData = {
+            requestId: requestId,
+            accept: accept
+        };
+        $http({
+            method: 'POST',
+            url: '/api/vote',
+            headers: {'Authorization': localStorage.getItem('auth')},
+            data: voteData
+        }).then(function successCallback(response) {
+            console.log(response);
+            $scope.getPlaylists();
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
     $scope.init = function () {
         $scope.getPlaylists();
     }

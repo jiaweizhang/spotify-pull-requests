@@ -17,7 +17,7 @@ spotifyCollab
                 var data = response.data.body;
                 var playlistId = data.playlistPR.id;
 
-                window.location = '/playlist#' + playlistId;
+                window.location = '/#/playlist#' + playlistId;
             }, function errorCallback(response) {
                 console.log(response);
             });
