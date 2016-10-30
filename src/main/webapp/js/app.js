@@ -62,19 +62,19 @@ spotifyCollab.controller('mainController', function ($scope) {
     }
 });
 
-spotifyCollab.controller('playlistController', function($scope, $http, $routeParams) {
-    var playlistId = $routeParams.param;
+spotifyCollab.controller('playlistController', function ($scope, $http) {
+    var playlistId = window.location.href.split('#')[1];
 
     console.log(playlistId);
-    $scope.playlists = [];
+    $scope.requests = [];
 
-    $scope.getPlaylists = function() {
+    $scope.getPlaylists = function () {
         $http({
             method: 'GET',
             url: '/api/playlists',
             headers: {'Authorization': localStorage.getItem('auth')}
         }).then(function successCallback(response) {
-            $scope.playlists = response.data.body;
+            $scope.requests = response.data.body;
             console.log($scope.playLists);
         }, function errorCallback(response) {
             console.log(response);
