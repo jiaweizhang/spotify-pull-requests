@@ -58,13 +58,20 @@ public class PlaylistService extends Service {
         }
     }
 
-    private static Playlist createPlaylist(String spotifyId, String title, Api api) {
-        final PlaylistCreationRequest request = api.createPlaylist(spotifyId, title)
-                .publicAccess(true)
-                .build();
+    private static JSONObject createPlaylist(String spotifyId, String title, String authHeader) {
+        HttpRequestWithBody http =
+                Unirest.post("https://api.spotify.com/v1/users/" + spotifyId + "/playlists");
 
         try {
-            return request.get();
+            HttpResponse<JsonNode> httpResponse = http
+                    .header("Content-Type", "application/json")
+                    .header("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36")
+                    .header("Authorization", authHeader)
+                    .body("{\"name\":\"" + title + "\", \"public\":true}")
+                    .asJson();
+
+            JsonNode response = httpResponse.getBody();
+            return response.getObject();
         } catch (Exception e) {
             e.printStackTrace();
             throw new WrapperException();
@@ -93,9 +100,9 @@ public class PlaylistService extends Service {
 
     public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
         // create playlist
-        Playlist playlist = createPlaylist(createPlaylistRequest.spotifyId,
+        JSONObject playlist = createPlaylist(createPlaylistRequest.spotifyId,
                 createPlaylistRequest.playlistName,
-                createPlaylistRequest.api);
+                createPlaylistRequest.accessToken);
 
         // create playlist_pr
         JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
@@ -103,8 +110,8 @@ public class PlaylistService extends Service {
                 createPlaylistRequest.accessToken);
 
         // create playlist in database
-        data.Playlist dataPlaylist = new data.Playlist(playlist.getId(),
-                playlist.getName(),
+        data.Playlist dataPlaylist = new data.Playlist(playlist.getString("id"),
+                playlist.getString("name"),
                 createPlaylistRequest.spotifyId,
                 createPlaylistRequest.threshold);
         playlistAccessor.addPlaylist(dataPlaylist);
@@ -114,7 +121,7 @@ public class PlaylistService extends Service {
                 playlistPR.getString("id"),
                 playlistPR.getString("name"),
                 createPlaylistRequest.spotifyId,
-                playlist.getName());
+                playlist.getString("id"));
         playlistPrAccessor.insert(dataPlaylistPR);
 
         // join playlist as a contributor
