@@ -62,6 +62,7 @@ public class PlaylistService extends Service {
         HttpRequestWithBody http =
                 Unirest.post("https://api.spotify.com/v1/users/" + spotifyId + "/playlists");
 
+        System.out.println("PL title: " + title);
         try {
             HttpResponse<JsonNode> httpResponse = http
                     .header("Content-Type", "application/json")
