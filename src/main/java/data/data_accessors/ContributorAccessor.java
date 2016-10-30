@@ -33,10 +33,10 @@ public class ContributorAccessor extends Accessor {
         return myQuery.select().from(PLAYLISTS_PR).join(CONTRIBUTORS)
                 .on(PLAYLISTS_PR.PLAYLIST_ID.equal(CONTRIBUTORS.PLAYLIST_PR_ID).and(CONTRIBUTORS.SPOTIFY_ID.equal(contributorId)))
                 .fetch().stream().map(record -> new PlaylistPr(
-                record.getValue(PLAYLISTS_PR.PLAYLIST_ID),
-                record.getValue(PLAYLISTS_PR.PLAYLIST_NAME),
-                record.getValue(PLAYLISTS_PR.OWNER_ID),
-                record.getValue(PLAYLISTS_PR.PARENT_PLAYLIST_ID)
-        )).collect(Collectors.toList());
+                        record.getValue(PLAYLISTS_PR.PLAYLIST_ID),
+                        record.getValue(PLAYLISTS_PR.PLAYLIST_NAME),
+                        record.getValue(PLAYLISTS_PR.OWNER_ID),
+                        record.getValue(PLAYLISTS_PR.PARENT_PLAYLIST_ID)
+                )).collect(Collectors.toList());
     }
 }

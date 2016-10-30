@@ -82,7 +82,7 @@ spotifyCollab.controller('playlistsController', function ($scope, $http) {
         });
     };
 
-    $scope.init = function() {
+    $scope.init = function () {
         $scope.getPlaylists();
     };
 
@@ -107,7 +107,7 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
         });
     };
 
-    $scope.vote = function(requestId, accept) {
+    $scope.vote = function (requestId, accept) {
         var voteData = {
             requestId: requestId,
             accept: accept
@@ -134,7 +134,7 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
 
 spotifyCollab.controller('joinController', function ($scope, $http) {
 
-    $scope.submit = function() {
+    $scope.submit = function () {
         var joinData = {
             playlistId: $scope.playlistId
         };
