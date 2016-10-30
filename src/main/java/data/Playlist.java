@@ -1,8 +1,6 @@
 package data;
 
-/**
- * Created by Ankit on 10/29/2016.
- */
+
 public class Playlist {
     public String playlistId;
     public String playlistName;
