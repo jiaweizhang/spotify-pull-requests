@@ -174,7 +174,9 @@ public class PlaylistService extends Service {
 
     public StdResponse vote(VoteRequest voteRequest) {
         // add the vote
-        Vote vote = new Vote(voteRequest.requestId, voteRequest.spotifyId, voteRequest.approve);
+        Vote vote = new Vote(voteRequest.requestId, voteRequest.spotifyId, !voteRequest.approve);
+        System.out.println(voteRequest.requestId);
+        System.out.println(voteRequest.spotifyId);
         votesAccessor.addVote(vote);
 
         // determine if vote causes song to pass threshold
