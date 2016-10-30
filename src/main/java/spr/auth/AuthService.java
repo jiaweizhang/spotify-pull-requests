@@ -51,13 +51,13 @@ public class AuthService extends Service {
                 userData.accessToken = tokenResponse.access_token;
                 userData.refreshToken = tokenResponse.refresh_token;
                 userData.expiration = expiration;
-                authAccessor.updateAccessTokenAndExpirationToken(userData);
+                authAccessor.updateUser(userData);
             } else {
                 // add user to table
                 Users userData = new Users(userId, email, code,
                         tokenResponse.refresh_token, tokenResponse.access_token, expiration);
                 System.out.println(email);
-                authAccessor.insertUser(userData);
+                authAccessor.createUser(userData);
             }
             return JwtUtility.generateToken(userId);
         } catch (Exception e) {

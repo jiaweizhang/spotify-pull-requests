@@ -2,8 +2,7 @@ package spr.std;
 
 import com.wrapper.spotify.Api;
 import data.Users;
-import data.data_accessors.AuthAccessor;
-import data.data_accessors.VotesAccessor;
+import data.data_accessors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import spr.exceptions.AuthException;
@@ -21,9 +20,10 @@ import java.sql.Timestamp;
 public class Service {
 
     public final AuthAccessor authAccessor = new AuthAccessor();
-    public final MasterPlaylistAccessor masterPlaylistAccessor = new MasterPlaylistAccessor();
-    public final IndividualPlaylistAccessor individualPlaylistAccessor = new IndividualPlaylistAccessor();
-    public final MasterSongAccessor masterSongAccessor = new MasterSongAccessor();
+    public final PlaylistAccessor playlistAccessor = new PlaylistAccessor();
+    public final PlaylistPrAccessor playlistPrAccessor = new PlaylistPrAccessor();
+    public final RequestAccessor requestAccessor = new RequestAccessor();
+    public final ContributorAccessor contributorAccessor = new ContributorAccessor();
     public final VotesAccessor votesAccessor = new VotesAccessor();
 
     @Autowired
@@ -44,6 +44,26 @@ public class Service {
             }
             stdRequest.accessToken = user.accessToken;
             stdRequest.api = Api.builder().accessToken(user.accessToken).build();
+        } else {
+            // user does not exist
+            throw new AuthException("User does not exist");
+        }
+    }
+
+    public Api getApi(String spotifyId) {
+        if (authAccessor.isExist(spotifyId)) {
+            // if exists, check that access_token is not expired
+            Users user = authAccessor.getUser(spotifyId);
+            if (user.expiration.after(new Timestamp(System.currentTimeMillis()))) {
+                // expired
+                TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.refreshToken);
+                user.accessToken = tokenResponse.access_token;
+                user.expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
+
+                // update access token and expiration
+                authAccessor.updateUser(user);
+            }
+            return Api.builder().accessToken(user.accessToken).build();
         } else {
             // user does not exist
             throw new AuthException("User does not exist");
