@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS contributors (
 
 /* Vote table */
 CREATE TABLE IF NOT EXISTS vote_table (
-  request_id VARCHAR(50) NOT NULL,
+  request_id INTEGER NOT NULL,
   spotify_id VARCHAR(50) NOT NULL,
   vote       BOOLEAN     NOT NULL,
   CONSTRAINT FK_vote_request_id FOREIGN KEY (request_id) REFERENCES requests (request_id),

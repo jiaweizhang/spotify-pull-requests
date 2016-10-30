@@ -32,62 +32,6 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 public class PlaylistService extends Service {
 
-    public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
-        // create playlist
-        Playlist playlist = createPlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName,
-                createPlaylistRequest.api);
-
-        // create playlist_pr
-        JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
-                createPlaylistRequest.playlistName,
-                createPlaylistRequest.accessToken);
-
-        // create playlist in database
-
-        // create playlist_pr in database
-
-        // join playlist as a contributor
-
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("playlist", playlist);
-        map.put("playlistPR", playlistPR);
-
-        // return new CreatePlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully created collaborative playlist", map);
-    }
-
-    public StdResponse joinPlaylist(JoinPlaylistRequest joinPlaylistRequest) {
-        // join playlist as a contributor
-
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("playlist", null); //TODO
-        map.put("playlistPR", null); // TODO
-
-        // return new JoinPlaylistResponse
-        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", null);
-    }
-
-
-    public StdResponse vote(VoteRequest voteRequest) {
-        // add the vote
-
-        // determine if vote causes song to pass threshold
-
-        // return new VoteResponse
-        return null;
-    }
-
-    public StdResponse getPlaylists(StdRequest stdRequest) {
-        // return simply every playlist
-        return null;
-    }
-
-    public StdResponse getPlaylistById(StdRequest stdRequest, String playlistId) {
-        Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
-        return new StdResponseWithBody(200, true, "Successfully retrieved", playlist);
-    }
-
     private static List<SimplePlaylist> getPlaylists(String spotifyId, Api api) {
         final UserPlaylistsRequest request = api.getPlaylistsForUser(spotifyId).build();
         try {
@@ -141,5 +85,60 @@ public class PlaylistService extends Service {
             e.printStackTrace();
             throw new WrapperException();
         }
+    }
+
+    public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
+        // create playlist
+        Playlist playlist = createPlaylist(createPlaylistRequest.spotifyId,
+                createPlaylistRequest.playlistName,
+                createPlaylistRequest.api);
+
+        // create playlist_pr
+        JSONObject playlistPR = createCollaborativePlaylist(createPlaylistRequest.spotifyId,
+                createPlaylistRequest.playlistName,
+                createPlaylistRequest.accessToken);
+
+        // create playlist in database
+
+        // create playlist_pr in database
+
+        // join playlist as a contributor
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("playlist", playlist);
+        map.put("playlistPR", playlistPR);
+
+        // return new CreatePlaylistResponse
+        return new StdResponseWithBody(200, true, "Successfully created collaborative playlist", map);
+    }
+
+    public StdResponse joinPlaylist(JoinPlaylistRequest joinPlaylistRequest) {
+        // join playlist as a contributor
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("playlist", null); //TODO
+        map.put("playlistPR", null); // TODO
+
+        // return new JoinPlaylistResponse
+        return new StdResponseWithBody(200, true, "Successfully joined collaborative playlist", null);
+    }
+
+    public StdResponse vote(VoteRequest voteRequest) {
+        // add the vote
+
+        // determine if vote causes song to pass threshold
+
+        // return new VoteResponse
+        return null;
+    }
+
+    public StdResponse getPlaylists(StdRequest stdRequest) {
+        // return simply every playlist
+        return null;
+    }
+
+    public StdResponse getPlaylistById(StdRequest stdRequest, String playlistId) {
+        Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
+        return new StdResponseWithBody(200, true, "Successfully retrieved", playlist);
     }
 }

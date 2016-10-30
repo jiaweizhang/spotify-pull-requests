@@ -3,19 +3,19 @@ package data;
 import java.sql.Timestamp;
 
 public class Users {
-    public String mySpotifyUserID;
-    public String myEmail;
-    public String myAuthToken;
-    public String myRefreshToken;
-    public String myAccessToken;
-    public Timestamp myExpiration;
+    public String spotifyId;
+    public String email;
+    public String authorizationCode;
+    public String refreshToken;
+    public String accessToken;
+    public Timestamp expiration;
 
-    public Users(String spotifyUserID, String email, String authToken, String refreshToken, String accessToken, Timestamp expiration) {
-        mySpotifyUserID = spotifyUserID;
-        myEmail = email;
-        myAuthToken = authToken;
-        myRefreshToken = refreshToken;
-        myAccessToken = accessToken;
-        myExpiration = expiration;
+    public Users(String spotifyId, String email, String authorizationCode, String refreshToken, String accessToken, Timestamp expiration) {
+        this.spotifyId = spotifyId;
+        this.email = email;
+        this.authorizationCode = authorizationCode;
+        this.refreshToken = refreshToken;
+        this.accessToken = accessToken;
+        this.expiration = expiration;
     }
 }
