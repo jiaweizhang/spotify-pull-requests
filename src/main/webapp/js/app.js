@@ -71,19 +71,19 @@ spotifyCollab.controller('playlistsController', function ($scope, $http) {
 });
 
 spotifyCollab.controller('playlistController', function ($scope, $http) {
-    var playlistId = window.location.href.split('#')[2];
+    $scope.playlistId = window.location.href.split('#')[2];
 
     console.log(playlistId);
     $scope.requests = [];
 
-    $scope.getPlaylists = function () {
+    $scope.getPlaylist = function () {
         $http({
             method: 'GET',
-            url: '/api/playlist/' + playlistId,
+            url: '/api/playlist/' + $scope.playlistId,
             headers: {'Authorization': localStorage.getItem('auth')}
         }).then(function successCallback(response) {
             $scope.requests = response.data.body;
-            console.log($scope.playLists);
+            console.log($scope.requests);
         }, function errorCallback(response) {
             console.log(response);
         });
@@ -101,13 +101,13 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
             data: voteData
         }).then(function successCallback(response) {
             console.log(response);
-            $scope.getPlaylists();
+            $scope.getPlaylist();
         }, function errorCallback(response) {
             console.log(response);
         });
     };
 
     $scope.init = function () {
-        $scope.getPlaylists();
+        $scope.getPlaylist();
     }
 });
