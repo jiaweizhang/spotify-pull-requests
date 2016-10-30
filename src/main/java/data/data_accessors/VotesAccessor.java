@@ -59,9 +59,8 @@ public class VotesAccessor extends Accessor {
                 .values(vote.requestId, vote.spotifyId, vote.vote).execute();
     }
 
-    public int deleteVote(Vote vote) {
+    public int deleteVote(int requestId) {
         return myQuery.delete(VOTE_TABLE)
-                .where(VOTE_TABLE.REQUEST_ID.equal(vote.requestId)
-                        .and(VOTE_TABLE.SPOTIFY_ID.equal(vote.spotifyId))).execute();
+                .where(VOTE_TABLE.REQUEST_ID.equal(requestId)).execute();
     }
 }
