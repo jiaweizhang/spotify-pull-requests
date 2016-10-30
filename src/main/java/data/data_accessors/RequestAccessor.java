@@ -22,7 +22,6 @@ public class RequestAccessor extends Accessor {
     public boolean isExist(int requestId) {
         return myQuery.select().from(Requests.REQUESTS).where(Requests.REQUESTS.REQUEST_ID.equal(requestId)).fetchOne() != null;
     }
-
     public List<Request> returnRequests(String playlistId) {
         List<Request> requestList = new ArrayList<Request>();
         Result<Record> returnedRequests = myQuery.select().from(Requests.REQUESTS).where(Requests.REQUESTS.PLAYLIST_ID.equal(playlistId)).fetch();
