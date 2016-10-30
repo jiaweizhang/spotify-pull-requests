@@ -3,5 +3,5 @@
  */
 spotifyCollab
     .controller('logoutCtrl', function($scope) {
-
+        localStorage.removeItem('auth');
     });

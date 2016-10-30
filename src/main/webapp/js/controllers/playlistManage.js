@@ -26,7 +26,7 @@ spotifyCollab
         $http({
             method: 'GET',
             url: '/api/playlists/'+selectedPlaylistId,
-            headers: {'Authorization':"penis"}
+            headers: {'Authorization':localStorage.getItem('auth')}
         }).then(function successCallback(response) {
             var data = response.data;
             var parsedData = JSON.parse(data);

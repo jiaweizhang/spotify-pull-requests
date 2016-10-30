@@ -8,8 +8,8 @@ spotifyCollab
 
         $http({
             method: 'GET',
-            url: '/api/playlist',
-            headers: {'Authorization':"penis"}
+            url: '/api/playlists',
+            headers: {'Authorization':localStorage.getItem('auth')}
         }).then(function successCallback(response) {
             var data = response.data;
             var parsedData = JSON.parse(data);

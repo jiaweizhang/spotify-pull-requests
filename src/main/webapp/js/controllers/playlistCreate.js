@@ -10,8 +10,8 @@ spotifyCollab
             var playlistData = {"playlistName": playlistName, "threshold": threshold};
             $http({
                 method: 'POST',
-                url: '/api/playlist',
-                headers: {'Authorization':"penis"},
+                url: '/api/playlists',
+                headers: {'Authorization':localStorage.getItem('auth')},
                 data: playlistData
             }).then(function successCallback(response) {
                 $rootScope.playlists.push(playlistName);
