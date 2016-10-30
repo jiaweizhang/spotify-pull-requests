@@ -109,5 +109,7 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
 
     $scope.init = function () {
         $scope.getPlaylist();
-    }
+    };
+
+    $scope.init();
 });
