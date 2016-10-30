@@ -39,6 +39,9 @@ public class Service {
             if (user.expiration.before(new Timestamp(System.currentTimeMillis()))) {
                 // expired
                 TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.refreshToken);
+                if (tokenResponse.access_token == null) {
+                    throw new AuthException("LOLOLOLOL");
+                }
                 user.accessToken = tokenResponse.access_token;
                 user.expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
 
@@ -58,9 +61,12 @@ public class Service {
         if (authAccessor.isExist(spotifyId)) {
             // if exists, check that access_token is not expired
             Users user = authAccessor.getUser(spotifyId);
-            if (user.expiration.after(new Timestamp(System.currentTimeMillis()))) {
+            if (user.expiration.before(new Timestamp(System.currentTimeMillis()))) {
                 // expired
                 TokenResponse tokenResponse = AuthUtility.tokenRefresh(user.refreshToken);
+                if (tokenResponse.access_token == null) {
+                    throw new AuthException("LOLOLOLOL2");
+                }
                 user.accessToken = tokenResponse.access_token;
                 user.expiration = new Timestamp(System.currentTimeMillis() + 3500 * 1000);
 
