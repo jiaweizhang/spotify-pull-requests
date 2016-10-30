@@ -200,8 +200,11 @@ public class PlaylistService extends Service {
     }
 
     public StdResponse getPlaylistPRById(StdRequest stdRequest, String playlistId) {
+        PlaylistPr playlistPr = playlistPrAccessor.getPlaylistPr(playlistId);
+        Api ownerApi = getApi(playlistPr.ownerId);
+
         // refresh the requests related to the PR
-        Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
+        Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, ownerApi);
 
         playlist.getTracks().getItems().forEach(System.out::println);
 
