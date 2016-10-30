@@ -206,7 +206,7 @@ public class PlaylistService extends Service {
     }
 
     public void addSongToPlaylist(String spotifyId, String songId, String playlistId, Api api) {
-        final List<String> tracksToAdd = Collections.singletonList(songId);
+        final List<String> tracksToAdd = Collections.singletonList("spotify:track:" + songId);
 
         final AddTrackToPlaylistRequest request = api.addTracksToPlaylist(spotifyId, playlistId, tracksToAdd)
                 .build();
