@@ -22,7 +22,7 @@ public class PlaylistController extends Controller {
     @Autowired
     private PlaylistService playlistService;
 
-    @RequestMapping(value = "/playlist",
+    @RequestMapping(value = "/playlists",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
