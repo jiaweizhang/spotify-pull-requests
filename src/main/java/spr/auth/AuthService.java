@@ -25,7 +25,7 @@ public class AuthService extends Service {
             throw new AuthException("state does not equal spr");
         }
 
-        if (error == null || error.equals("")) {
+        if (error != null) {
             // error exists
             throw new AuthException("error within Spotify");
         }
@@ -56,10 +56,12 @@ public class AuthService extends Service {
                 // add user to table
                 Users userData = new Users(userId, email, code,
                         tokenResponse.refresh_token, tokenResponse.access_token, expiration);
+                System.out.println(email);
                 authAccessor.insertUser(userData);
             }
             return JwtUtility.generateToken(userId);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

@@ -43,7 +43,6 @@ public class AuthUtility {
         HttpRequestWithBody http = Unirest.post(TOKEN_ROOT);
 
         String authorizationHeader = getAuthorizationHeader();
-        String redirectUrl = getRedirectUrl();
 
         try {
             HttpResponse<String> httpResponse = http

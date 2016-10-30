@@ -6,9 +6,9 @@ CREATE SCHEMA public;
 CREATE TABLE IF NOT EXISTS users (
   spotify_userid     VARCHAR(50)  NOT NULL,
   email              VARCHAR(255) NOT NULL,
-  authorization_code VARCHAR(255) NOT NULL,
-  refresh_token      VARCHAR(255) NOT NULL,
-  access_token       VARCHAR(255),
+  authorization_code VARCHAR(4000) NOT NULL,
+  refresh_token      VARCHAR(4000) NOT NULL,
+  access_token       VARCHAR(4000),
   expiration         TIMESTAMP,
   CONSTRAINT PK_users PRIMARY KEY (spotify_userid)
 );
