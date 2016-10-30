@@ -3,6 +3,7 @@
     <table class="table table-condensed">
         <thead>
         <tr>
+            <th>Playlist ID</th>
             <th>Playlist Name</th>
             <th>PR Link</th>
             <th>Original Link</th>
@@ -10,6 +11,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="playlist in playlists">
+            <td>{{playlist.playlistId}}</td>
             <td><a ng-href="/#/playlist#{{playlist.playlistId}}" style="color:black;">{{playlist.playlistName}}</a></td>
             <td><a class="btn btn-primary"
                    ng-href="https://open.spotify.com/user/{{playlist.ownerId}}/playlist/{{playlist.playlistId}}">PR
