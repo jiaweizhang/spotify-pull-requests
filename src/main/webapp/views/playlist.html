@@ -13,8 +13,12 @@
         <tr ng-repeat="request in requests">
             <td ng-bind="request.songId"></td>
             <td ng-bind="request.spotifyId"></td>
-            <td><button class="btn btn-success" ng-click="vote(request.requestId, true)">Accept</button></td>
-            <td><button class="btn btn-danger" ng-click="vote(request.requestId, false)">Decline</button></td>
+            <td><button class="btn btn-success" ng-click="vote(request.requestId, true)">
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+            </button></td>
+            <td><button class="btn btn-danger" ng-click="vote(request.requestId, false)">
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+            </button></td>
         </tr>
         </tbody>
     </table>
