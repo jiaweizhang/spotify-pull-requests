@@ -9,18 +9,17 @@ spotifyCollab
                 'playlistName': $scope.playlistName,
                 'threshold': parseInt($scope.threshold)
             };
-            $http({
-                method: 'POST',
-                url: '/api/playlists',
-                headers: {'Authorization': localStorage.getItem('auth')},
-                data: playlistData
-            }).then(function successCallback(response) {
-                var data = response.data.body;
-                var playlistId = data.playlistPR.id;
+
+            var parameter = JSON.stringify(playlistData);
+            $http.post('/api/playlists', parameter, {headers: {'Authorization': localStorage.getItem('auth')} }).
+            success(function(data, status, headers, config) {
+                var parsedData = data.body;
+                var playlistId = parsedData.playlistPR.id;
 
                 window.location = '/#/playlist#' + playlistId;
-            }, function errorCallback(response) {
-                console.log(response);
+            }).
+            error(function(data, status, headers, config) {
+                console.log(data);
             });
         };
     });
