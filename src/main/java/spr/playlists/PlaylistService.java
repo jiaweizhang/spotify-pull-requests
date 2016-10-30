@@ -62,7 +62,6 @@ public class PlaylistService extends Service {
         HttpRequestWithBody http =
                 Unirest.post("https://api.spotify.com/v1/users/" + spotifyId + "/playlists");
 
-        System.out.println("PL title: " + title);
         try {
             HttpResponse<JsonNode> httpResponse = http
                     .header("Content-Type", "application/json")
@@ -100,7 +99,6 @@ public class PlaylistService extends Service {
     }
 
     public StdResponse createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
-        System.out.println("beginning of create playlist title: " + createPlaylistRequest.playlistTitle);
         // create playlist
         JSONObject playlist = createPlaylist(createPlaylistRequest.spotifyId,
                 createPlaylistRequest.playlistTitle,
@@ -227,13 +225,11 @@ public class PlaylistService extends Service {
         // refresh the requests related to the PR
         Playlist playlist = getPlaylistById(stdRequest.spotifyId, playlistId, stdRequest.api);
 
-        System.out.println("dkfjdkfjd");
         playlist.getTracks().getItems().forEach(System.out::println);
 
         Set<String> requests = requestAccessor.returnRequests(playlistId).stream()
                 .map(r -> r.songId).collect(Collectors.toSet());
 
-        System.out.println("dlkfjdlfkdjdlfkjdlfkdjf");
         System.out.println(Arrays.toString(requests.toArray()));
 
         List<Request> toAdd = playlist.getTracks().getItems().stream()
@@ -241,10 +237,8 @@ public class PlaylistService extends Service {
                 .map(t -> new Request(-1, playlist.getId(), t.getAddedBy().getId(), t.getTrack().getId()))
                 .collect(Collectors.toList());
 
-        System.out.println("funsies");
         for (Request request : toAdd) {
             requestAccessor.addRequest(request);
-            System.out.println(request.requestId);
         }
 
         List<Request> requestList = requestAccessor.returnRequests(playlistId);
