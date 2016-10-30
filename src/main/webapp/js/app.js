@@ -119,7 +119,7 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
             data: voteData
         }).then(function successCallback(response) {
             console.log(response);
-            $scope.getPlaylist();
+            $scope.requests = $scope.getPlaylist();
         }, function errorCallback(response) {
             console.log(response);
         });
