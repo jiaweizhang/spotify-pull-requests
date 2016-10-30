@@ -3,6 +3,7 @@
  */
 spotifyCollab
     .controller('navbarCtrl', function($scope, $rootScope, $http) {
+
        // $rootScope.playlists = ["Lit AF", "Chill AF", "Playlist 1", "Playlist 2"]; // TO DO: need to populate using API call
         $rootScope.playlists = [{id:1, name: "Lit AF"}, {id:2, name: "Chill AF"}]; //map playlist id to name
 
