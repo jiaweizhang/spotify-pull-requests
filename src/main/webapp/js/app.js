@@ -105,8 +105,9 @@ spotifyCollab.controller('playlistController', function ($scope, $http) {
             $scope.requests = response.data.body;
             console.log($scope.requests);
             for(var i = 0; i < $scope.requests.length; i++) {
+                console.log($scope.requests[i].songId);
                 $scope.embedUrl = "https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:" +
-                        $scope.requests[i].songId + ",";
+                        $scope.requests[i].songId.toString() + ",";
             }
             $scope.embedUrl = $scope.embedUrl.slice(0, -1);
             $scope.embedUrl = $scope.embedUrl + "&theme=white";
