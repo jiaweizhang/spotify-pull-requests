@@ -6,15 +6,14 @@ spotifyCollab
 
         // Get first song in list and load as embedded song
         var currentSongId = "";
-        $scope.songEmbedLink;
         $scope.setEmbedLink = function(currentSongId) {
             $scope.songEmbedLink = "https://embed.spotify.com/?uri=spotify%3Atrack%" + currentSongId + "&theme=white";
-        }
+        };
 
 
         $scope.playlistSongs = [];
         $scope.param = $routeParams.param;
-        var selectedPlaylistName
+        var selectedPlaylistName;
         var findPlaylistId = function (selectedPlaylistName) {
             for (var i = 0; i < $rootScope.playlists.length; i++) {
                 if ($rootScope.playlists[i].name == selectedPlaylistName) {
@@ -42,8 +41,7 @@ spotifyCollab
                 url: '/api/playlists/' + selectedPlaylistId,
                 headers: {'Authorization': localStorage.getItem('auth')}
             }).then(function successCallback(response) {
-                var data = response.data.body;
-                var parsedData = data;
+                var parsedData = response.data.body;
                 for (var i = 0; i < parsedData.length; i++) {
                     $scope.playlistSongs.push(parsedData[i]);
                 }
@@ -58,7 +56,7 @@ spotifyCollab
                 // or server returns response with an error status.
                 console.log(response);
             });
-        }
+        };
 
         $scope.accept = false;
         var voteData = {requestId: currentSongId, approve: $scope.accept};
@@ -67,13 +65,13 @@ spotifyCollab
             $scope.accept = true;
             voteData = {requestId: currentSongId, approve: $scope.accept};
             $scope.sendVote();
-        }
+        };
 
         $scope.voteNo = function() {
             $scope.accept = false;
             voteData = {requestId: currentSongId, approve: $scope.accept};
             $scope.sendVote();
-        }
+        };
 
         $scope.sendVote = function() {
             $http({

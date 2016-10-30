@@ -51,7 +51,7 @@ spotifyCollab.run(function ($rootScope, $location) {
     });
 });
 
-myApp.controller('mainController', function ($scope) {
+spotifyCollab.controller('mainController', function ($scope) {
     $scope.logout = function () {
         localStorage.removeItem('auth');
     }
